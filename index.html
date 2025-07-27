@@ -1,14 +1,55 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/gsaliou-ds.github.io/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script type="module" crossorigin src="/gsaliou-ds.github.io/assets/index-Amqh4uqn.js"></script>
-    <link rel="stylesheet" crossorigin href="/gsaliou-ds.github.io/assets/index-C6G_3qQV.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gwendal SALIOU - CV & Blog</title>
+  <meta name="description" content="CV et blog de Gwendal SALIOU, doctorant en IA & previsions météorologique" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Gwendal SALIOU</h1>
+      <p>IA • Data Science • Météo</p>
+      <nav>
+        <a href="#cv">CV</a>
+        <a href="#blog">Blog</a>
+        <a href="mailto:gwendal.saliou@imt-atlantique.net">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="cv" class="section">
+      <div class="container">
+        <h2>Mon CV</h2>
+        <p><strong>Master 2 Science des données Oceanique</strong> – Université de Brest, Institut Universitaire Européen de la mer, ENSTA-B, IMT-Atlantique</p>
+        <ul>
+          <li>🧠 Modélisation IA – PyTorch, TensorFlow, Scikit-learn</li>
+          <li>💾 Données & bases de données – Pandas, SQL, MongoDB</li>
+          <li>🌐 Développement Web – HTML, JS, React</li>
+          <li>🔧 Développement Logiciel – C++, Python, Java</li>
+          <li>📚 Communication – Documentation technique, projets associatifs</li>
+        </ul>
+        <a href="assets/pdf/cv.pdf" class="btn" target="_blank">Télécharger le CV (PDF)</a>
+      </div>
+    </section>
+
+    <section id="blog" class="section">
+      <div class="container">
+        <h2>Blog</h2>
+        <p>Je partage ici mes réflexions sur l’IA, la recherche et mes projets.</p>
+        <a href="src/html/blog.html" class="btn">Voir les articles</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Gwendal SALIOU. Tous droits réservés.</p>
+    </div>
+  </footer>
+</body>
 </html>
