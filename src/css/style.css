@@ -1,93 +1,119 @@
 :root {
-    --primary: #005e90;
-    --secondary: #0abdc6;
-    --bg: #f9f9f9;
-    --text: #222;
-    --font: 'Inter', sans-serif;
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-  
-  .container {
-    width: 90%;
-    max-width: 960px;
-    margin: auto;
-    padding: 2rem 0;
-  }
-  
-  header {
-    background: var(--primary);
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
-  }
-  
-  header h1 {
-    font-size: 2.5rem;
-  }
-  
-  header p {
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-  }
-  
-  nav {
-    margin-top: 1rem;
-  }
-  
-  nav a {
-    margin: 0 1rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  
-  .section {
-    padding: 3rem 0;
-  }
-  
-  .section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--primary);
-  }
-  
-  ul {
-    margin-top: 1rem;
-    padding-left: 1.5rem;
-  }
-  
-  .btn {
-    display: inline-block;
-    background: var(--secondary);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    margin-top: 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-  
-  .btn:hover {
-    background: var(--primary);
-  }
-  
-  footer {
-    text-align: center;
-    padding: 2rem 0;
-    font-size: 0.9rem;
-    background: #eee;
-  }
-  
+  --primary: #005e90;
+  --secondary: #0abdc6;
+  --bg-light: #f9f9f9;
+  --bg-dark: #e6f1f6;
+  --text: #222;
+  --font: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-light);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.container {
+  width: 90%;
+  max-width: 960px;
+  margin: auto;
+  padding: 2rem 0;
+}
+
+/* Header */
+.main-header {
+  background: white;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.main-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+nav a {
+  margin-left: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(120deg, #0070b8, #3ebacb);
+  color: white;
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Section */
+.section {
+  padding: 4rem 0;
+}
+
+.alt-bg {
+  background: var(--bg-dark);
+}
+
+.section h2 {
+  color: var(--primary);
+  margin-bottom: 1.2rem;
+  font-size: 1.7rem;
+}
+
+ul.skills {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 0.7rem 1.3rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--secondary);
+}
+
+/* Footer */
+.footer {
+  background: #f1f1f1;
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}

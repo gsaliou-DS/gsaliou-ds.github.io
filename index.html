@@ -3,53 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gwendal SALIOU - CV & Blog</title>
-  <meta name="description" content="CV et blog de Gwendal SALIOU, doctorant en IA & previsions météorologique" />
+  <title>Gwendal SALIOU – IA, Data Science & Météo</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
+
+  <header class="main-header">
     <div class="container">
-      <h1>Gwendal SALIOU</h1>
-      <p>IA • Data Science • Météo</p>
+      <h1 class="logo">Gwendal SALIOU</h1>
       <nav>
         <a href="#cv">CV</a>
         <a href="#blog">Blog</a>
-        <a href="mailto:gwendal.saliou@imt-atlantique.net">Contact</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>IA • Data Science • Météo</h2>
+      <p>Recherche, modélisation et développement appliqués aux données océaniques et climatiques</p>
+    </div>
+  </section>
 
   <main>
     <section id="cv" class="section">
       <div class="container">
         <h2>Mon CV</h2>
-        <p><strong>Master 2 Science des données Oceanique</strong> – Université de Brest, Institut Universitaire Européen de la mer, ENSTA-B, IMT-Atlantique</p>
-        <ul>
+        <p><strong>Master 2 Science des Données Océaniques</strong> – Université de Brest, ENSTA-B, IMT-Atlantique</p>
+        <ul class="skills">
           <li>🧠 Modélisation IA – PyTorch, TensorFlow, Scikit-learn</li>
-          <li>💾 Données & bases de données – Pandas, SQL, MongoDB</li>
-          <li>🌐 Développement Web – HTML, JS, React</li>
-          <li>🔧 Développement Logiciel – C++, Python, Java</li>
-          <li>📚 Communication – Documentation technique, projets associatifs</li>
+          <li>💾 Données & bases – Pandas, SQL, MongoDB</li>
+          <li>🌐 Dév Web – HTML, JavaScript, React</li>
+          <li>🔧 Dév Logiciel – C++, Python, Java</li>
+          <li>📚 Communication – Rédaction technique, projets associatifs</li>
         </ul>
-        <a href="assets/pdf/CV_SALIOU.pdf" class="btn" target="_blank">Télécharger le CV (PDF)</a>
+        <a class="btn" href="assets/pdf/CV_SALIOU.pdf" target="_blank">📄 Télécharger le CV (PDF)</a>
       </div>
     </section>
 
-    <section id="blog" class="section">
+    <section id="blog" class="section alt-bg">
       <div class="container">
         <h2>Blog</h2>
-        <p>Je partage ici mes réflexions sur l’IA, la recherche et mes projets.</p>
-        <a href="src/html/blog.html" class="btn">Voir les articles</a>
+        <p>Je partage ici mes réflexions sur l’IA, le climat, la science des données et mes projets techniques.</p>
+        <a class="btn" href="src/html/blog.html">Voir les articles</a>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>Email : <a href="mailto:gwendal.saliou.pro@gmail.com">gwendal.saliou.pro@gmail.com</a></p>
+        <p>GitHub : <a href="https://github.com/gsaliou-ds" target="_blank">gsaliou-ds</a></p>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="footer">
     <div class="container">
       <p>&copy; 2025 Gwendal SALIOU. Tous droits réservés.</p>
     </div>
   </footer>
+
 </body>
 </html>
