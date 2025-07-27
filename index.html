@@ -1,73 +1,155 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gwendal SALIOU – IA, Data Science & Météo" />
+  <meta name="keywords" content="Recherche, modélisation, développement appliqués aux données océaniques atmosphérique et climatiques" />
+  <meta name="author" content="Gwendal SALIOU" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Gwendal SALIOU – IA, Data Science & Météo" />
+  <meta property="og:description" content="Informaticien spécialisé en IA & Data Science appliquée à la santé" />
+  <meta property="og:url" content="https://gsaliou-ds.github.io" />
+  
   <title>Gwendal SALIOU – IA, Data Science & Météo</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <header class="main-header">
+  <header>
     <div class="container">
-      <h1 class="logo">Gwendal SALIOU</h1>
-      <nav>
-        <a href="#cv">CV</a>
-        <a href="#blog">Blog</a>
-        <a href="#contact">Contact</a>
+      <nav role="navigation" aria-label="Navigation principale">
+        <a href="#about" aria-label="Aller à la section Profil">Profil</a>
+        <a href="#skills" aria-label="Aller à la section Compétences">Compétences</a>
+        <a href="src/html/projets.html" aria-label="Voir mes projets">Projets</a>
+        <a href="src/html/cv.html" aria-label="Voir mon CV">CV</a>
+        <a href="#contact" aria-label="Me contacter">Contact</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h2>IA • Data Science • Météo</h2>
-      <p>Recherche, modélisation et développement appliqués aux données océaniques et climatiques</p>
-    </div>
-  </section>
-
   <main>
-    <section id="cv" class="section">
+    <section class="hero" role="banner">
       <div class="container">
-        <h2>Mon CV</h2>
-        <p><strong>Master 2 Science des Données Océaniques</strong> – Université de Brest, ENSTA-B, IMT-Atlantique</p>
-        <ul class="skills">
-          <li>🧠 Modélisation IA – PyTorch, TensorFlow, Scikit-learn</li>
-          <li>💾 Données & bases – Pandas, SQL, MongoDB</li>
-          <li>🌐 Dév Web – HTML, JavaScript, React</li>
-          <li>🔧 Dév Logiciel – C++, Python, Java</li>
-          <li>📚 Communication – Rédaction technique, projets associatifs</li>
-        </ul>
-        <a class="btn" href="assets/pdf/CV_SALIOU.pdf" target="_blank">📄 Télécharger le CV (PDF)</a>
+        <h1>Gwendal SALIOU</h1>
+        <p>Chercheur spécialisé<br>IA & Data Science appliquée à la modélisation géophysique</p>
       </div>
     </section>
 
-    <section id="blog" class="section alt-bg">
+    <section id="about" class="section">
       <div class="container">
-        <h2>Blog</h2>
-        <p>Je partage ici mes réflexions sur l’IA, le climat, la science des données et mes projets techniques.</p>
-        <a class="btn" href="src/html/blog.html">Voir les articles</a>
+        <h2>Profil</h2>
+        <p>
+          <strong>Doctorant en première année en Intelligence Artificielle pour la Modélisation des Systèmes Terre</strong>, je mène mes travaux de recherche à IMT Atlantique, en collaboration avec Ifremer et le RIKEN-CCS (Japon).
+        </p>
+        <p>
+          Mon projet doctoral porte sur le développement de modèles hybrides combinant <strong>apprentissage automatique, assimilation de données</strong> et <strong>quantification d’incertitude</strong> appliqués à la <strong>prévision météorologique régionale</strong>. L’objectif est de concevoir des architectures IA capables de renforcer la robustesse et la précision des systèmes de prévision existants, tout en intégrant les observations réelles en temps quasi-réel.
+        </p>
+        <p>
+          Mes intérêts scientifiques couvrent les <strong>modèles synoptiques globaux IA</strong>, le <strong>downscaling régional</strong> de phénomènes atmosphériques, ainsi que les approches probabilistes pour la gestion des extrêmes climatiques. J’explore notamment le couplage de modèles comme <em>GraphCast</em> ou <em>FengWu</em> avec des systèmes NWP traditionnels type <em>WRF</em>.
+        </p>
+        <p>
+          Sur le plan technique, je maîtrise <strong>Python, C++ et les frameworks IA</strong> (PyTorch, TensorFlow, JAX), ainsi que des outils de simulation et d’analyse comme <strong>NetCDF, xarray, Dask</strong>. Je manipule également des infrastructures HPC pour l'entraînement de modèles à grande échelle.
+        </p>
+        <p>
+          Enfin, je m’intéresse aux enjeux épistémologiques et opérationnels du recours à l’IA dans les sciences du climat, notamment en matière de <strong>fiabilité, interprétabilité et transférabilité</strong> des modèles.
+        </p>
       </div>
     </section>
+    
+
+    <section id="skills" class="section">
+      <div class="container">
+        <h2>Expertises Techniques</h2>
+        <ul class="services">
+          <a href="src/html/modelisation_ia.html" aria-label="Modélisation IA"><li>🧠 <strong>Modélisation IA Atmosphérique</strong><br>PyTorch, TensorFlow, JAX, LSTM, CNN, Transformers</li></a>
+          
+          <a href="src/html/data_assimilation.html" aria-label="Assimilation de données"><li>📡 <strong>Assimilation de Données</strong><br>4D-Var, EnKF, observation operator, reanalyses ERA5</li></a>
+          
+          <a href="src/html/uq.html" aria-label="Quantification d'incertitude"><li>📊 <strong>Quantification d’Incertitude</strong><br>Ensemble forecasting, probabilistic AI, epistemic/aleatoric UQ</li></a>
+          
+          <a href="src/html/visualisation_meteo.html" aria-label="Visualisation météo"><li>📈 <strong>Visualisation Météo</strong><br>Cartopy, Matplotlib, Plotly, NetCDF/xarray</li></a>
+          
+          <a href="src/html/hpc_ai.html" aria-label="IA haute performance"><li>💻 <strong>IA sur HPC</strong><br>Clusters GPU, Slurm, Dask, Lightning, optimisation mémoire</li></a>
+          
+          <a href="src/html/bibliographie_code.html" aria-label="Documentation et reproductibilité"><li>📚 <strong>Documentation & Reproductibilité</strong><br>Rédaction scientifique, notebooks reproductibles, Git versioning</li></a>
+          
+          <a href="src/html/langages.html" aria-label="Langages et frameworks"><li>🧪 <strong>Langages & Frameworks</strong><br>Python, C++, Fortran (lecture), Bash, Docker</li></a>
+          
+          <a href="src/html/scientific_workflow.html" aria-label="Flux de travail scientifique"><li>🧬 <strong>Workflow de Recherche</strong><br>Prétraitement, expérimentation, évaluation, visualisation</li></a>
+        </ul>
+      </div>
+    </section>
+    
 
     <section id="contact" class="section">
       <div class="container">
-        <h2>Contact</h2>
-        <p>Email : <a href="mailto:gwendal.saliou.pro@gmail.com">gwendal.saliou.pro@gmail.com</a></p>
-        <p>GitHub : <a href="https://github.com/gsaliou-ds" target="_blank">gsaliou-ds</a></p>
+        <h2>Me Contacter</h2>
+        <p>Email : <small><a href="mailto:gwendal.saliou@imt-atlantique.net" aria-label="Envoyer un email">gwendal.saliou@imt-atlantique.net</a></small></p>
+        <p>GitHub : <small><a href="https://github.com/gsaliou-DS" target="_blank" rel="noopener noreferrer" aria-label="Mon profil GitHub">gsaliou-DS</a></small></p>
+        <p>LinkedIn : <small><a href="www.linkedin.com/in/gwendal-saliou" target="_blank" rel="noopener noreferrer" aria-label="Mon profil LinkedIn">linkedin.com/in/lemonnier-guillaume</a></small></p>
+
+        <div class="cv-download-section">
+          <p>📄 <strong>Télécharger mon CV</strong></p>
+          <p>
+            <a href="assets/pdf/CV_SALIOU.pdf" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Mon CV PDF">
+              Télécharger le CV (PDF)
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer>
     <div class="container">
-      <p>&copy; 2025 Gwendal SALIOU. Tous droits réservés.</p>
+      <p>&copy; 2025 Gwendal SALIOU - Tous droits réservés</p>
+      <p style="font-size: 0.9rem; margin-top: 10px;">
+        Ce code est protégé par licence. Toute utilisation nécessite l'attribution à l'auteur. 
+        <a href="LICENSE" style="color: var(--secondary-color);">Voir la licence</a>
+      </p>
     </div>
   </footer>
 
+  <script src="src/js/script.js"></script>
+
+  <style>
+    .cv-download-section {
+      text-align: center;
+      background: var(--primary-color);
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 30px;
+    }
+
+    .cv-download-section strong {
+      color: white;
+    }
+
+    .cv-download-section .btn {
+      background: white;
+      color: var(--primary-color);
+      margin-top: 10px;
+      font-weight: 600;
+      border: 2px solid white;
+    }
+
+    .cv-download-section .btn:hover {
+      background: var(--secondary-color);
+      color: white;
+      border-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+  </style>
 </body>
 </html>
