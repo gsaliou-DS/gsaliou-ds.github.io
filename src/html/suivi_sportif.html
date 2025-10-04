@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi Sportif - 6 Mois</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .info-badge {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 25px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .tab:hover {
+            background: var(--light);
+        }
+
+        .tab.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .progress-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .progress-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .progress-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-details {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .week-log {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .week-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .week-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .week-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .week-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .session-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .session-date {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .session-type {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .type-endurance {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-speed {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .type-technique {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .session-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .session-stat {
+            text-align: center;
+        }
+
+        .session-stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .session-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .session-notes {
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 10px;
+        }
+
+        .emoji-rating {
+            font-size: 1.5rem;
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .form-input {
+            padding: 12px;
+            border: 2px solid var(--light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            padding: 12px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid var(--success);
+        }
+
+        .knee-monitor {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .knee-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .knee-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .knee-ok {
+            background: #d1fae5;
+        }
+
+        .knee-warning {
+            background: #fef3c7;
+        }
+
+        .knee-danger {
+            background: #fee2e2;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Suivi Sportif 6 Mois</h1>
+            <p style="font-size: 1.1rem; color: #64748b; margin-top: 10px;">
+                Programme de remise en forme : Natation • Course à pied • Renforcement
+            </p>
+            <div class="header-info">
+                <div class="info-badge">📅 Début : <span id="startDate">04/10/2025</span></div>
+                <div class="info-badge">🎯 Semaine actuelle : <span id="currentWeek">1</span>/24</div>
+                <div class="info-badge">⏱️ Jours écoulés : <span id="daysElapsed">0</span></div>
+                <div class="info-badge">📈 Progression : <span id="overallProgress">0</span>%</div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('dashboard')">📊 Tableau de bord</button>
+            <button class="tab" onclick="switchTab('swimming')">🏊 Natation</button>
+            <button class="tab" onclick="switchTab('running')">🏃 Course à pied</button>
+            <button class="tab" onclick="switchTab('log')">📝 Ajouter séance</button>
+        </div>
+
+        <!-- DASHBOARD TAB -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-label">🏊 Volume Natation (semaine)</div>
+                    <div class="stat-value" id="swimWeekly">0m</div>
+                    <div class="stat-change positive">
+                        <span>↑</span> <span id="swimWeeklyChange">+0m</span> vs semaine dernière
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">🏃 Distance Course (semaine)</div>
+                    <div class="stat-value" id="runWeekly">0km</div>
+                    <div class="stat-change positive">
+                        <span>↑</span> <span id="runWeeklyChange">+0km</span> vs semaine dernière
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">⚖️ Poids actuel</div>
+                    <div class="stat-value" id="currentWeight">--kg</div>
+                    <div class="stat-change negative">
+                        <span>↓</span> <span id="weightChange">-0kg</span> depuis début
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">💪 Séances complétées</div>
+                    <div class="stat-value" id="sessionsCompleted">0/18</div>
+                    <div class="stat-change">
+                        <span id="completionRate">0%</span> de réussite
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knee Monitor for Running -->
+            <div class="knee-monitor">
+                <h2 class="chart-title">🦵 Surveillance Genou (LCA)</h2>
+                <div class="knee-status" id="kneeStatus">
+                    <div class="knee-indicator knee-ok">✅</div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 1.2rem;">État : Excellent</div>
+                        <div style="color: #64748b; margin-top: 5px;">Gonflement moyen : 0/10 | Dernière séance : Aucune douleur</div>
+                    </div>
+                </div>
+                <div class="alert alert-success">
+                    💡 Conseil : Continue la glace 15min après chaque sortie pendant les 3 premiers mois !
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-container">
+                <h2 class="chart-title">📈 Évolution Volume Hebdomadaire</h2>
+                <canvas id="volumeChart"></canvas>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <div class="progress-title">🏊 100m Crawl</div>
+                        <div class="progress-percentage">--</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details">
+                        Objectif : -10 à -15s | Actuel : -- | Référence : --
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <div class="progress-title">🏃 5km Chrono</div>
+                        <div class="progress-percentage">--</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details">
+                        Objectif : 20-24min | Actuel : -- | Référence : --
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <div class="progress-title">🦋 50m Papillon</div>
+                        <div class="progress-percentage">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details">
+                        Statut : Non démarré | Début prévu : Mois 3
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SWIMMING TAB -->
+        <div id="swimming" class="tab-content">
+            <div class="chart-container">
+                <h2 class="chart-title">🏊 Progression Natation</h2>
+                <canvas id="swimProgressChart"></canvas>
+            </div>
+
+            <div class="week-log">
+                <div class="week-header">
+                    <div class="week-title">Semaine <span id="swimWeekNumber">1</span></div>
+                    <div class="week-nav">
+                        <button class="week-btn" onclick="changeWeek('swim', -1)">← Précédent</button>
+                        <button class="week-btn" onclick="changeWeek('swim', 1)">Suivant →</button>
+                    </div>
+                </div>
+                <div id="swimSessions">
+                    <!-- Sessions will be populated by JavaScript -->
+                    <div class="session-card">
+                        <div class="session-header">
+                            <div class="session-date">Lundi 06/10</div>
+                            <span class="session-type type-endurance">Endurance</span>
+                        </div>
+                        <div class="session-stats">
+                            <div class="session-stat">
+                                <div class="session-stat-label">Distance</div>
+                                <div class="session-stat-value">2200m</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Durée</div>
+                                <div class="session-stat-value">58min</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Sensations</div>
+                                <div class="session-stat-value emoji-rating">😊</div>
+                            </div>
+                        </div>
+                        <div class="session-notes">
+                            <strong>Notes :</strong> Première séance, technique crawl à améliorer. Bonne endurance sur les 200m.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">🎯 Tests Chronométrés</h2>
+                <canvas id="swimTestsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RUNNING TAB -->
+        <div id="running" class="tab-content">
+            <div class="alert alert-warning">
+                ⚠️ <strong>Attention genou LCA :</strong> Surveiller le gonflement après chaque séance. Glace systématique les 3 premiers mois.
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">🏃 Progression Course à Pied</h2>
+                <canvas id="runProgressChart"></canvas>
+            </div>
+
+            <div class="week-log">
+                <div class="week-header">
+                    <div class="week-title">Semaine <span id="runWeekNumber">1</span></div>
+                    <div class="week-nav">
+                        <button class="week-btn" onclick="changeWeek('run', -1)">← Précédent</button>
+                        <button class="week-btn" onclick="changeWeek('run', 1)">Suivant →</button>
+                    </div>
+                </div>
+                <div id="runSessions">
+                    <div class="session-card">
+                        <div class="session-header">
+                            <div class="session-date">Mardi 02/01</div>
+                            <span class="session-type type-endurance">Endurance fondamentale</span>
+                        </div>
+                        <div class="session-stats">
+                            <div class="session-stat">
+                                <div class="session-stat-label">Distance</div>
+                                <div class="session-stat-value">4.2km</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Temps</div>
+                                <div class="session-stat-value">30min</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Allure</div>
+                                <div class="session-stat-value">7'08"/km</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">FC moy</div>
+                                <div class="session-stat-value">145bpm</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Genou</div>
+                                <div class="session-stat-value">2/10</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Sensations</div>
+                                <div class="session-stat-value emoji-rating">😊</div>
+                            </div>
+                        </div>
+                        <div class="session-notes">
+                            <strong>Notes :</strong> Première sortie post-LCA. Léger gonflement (normal). Glace 15min appliquée. Aucune douleur pendant la course.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">🎯 Tests Chronométrés</h2>
+                <canvas id="runTestsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- LOG TAB -->
+        <div id="log" class="tab-content">
+            <div class="form-section">
+                <h2 class="form-title">📝 Ajouter une séance</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Type d'activité</label>
+                        <select class="form-input" id="activityType" onchange="updateFormFields()">
+                            <option value="swimming">🏊 Natation</option>
+                            <option value="running">🏃 Course à pied</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="sessionDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Type de séance</label>
+                        <select class="form-input" id="sessionType">
+                            <option value="endurance">Endurance</option>
+                            <option value="speed">Vitesse</option>
+                            <option value="technique">Technique</option>
+                            <option value="mixed">Mixte</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Swimming specific fields -->
+                <div id="swimFields">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Sensations</label>
+                            <select class="form-input" id="runFeeling">
+                                <option value="great">😊 Excellentes</option>
+                                <option value="good">😐 Bonnes</option>
+                                <option value="tired">😓 Fatigué</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-input form-textarea" id="sessionNotes" placeholder="Observations, sensations, points à améliorer..."></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="saveSession()">💾 Enregistrer la séance</button>
+            </div>
+
+            <div class="alert alert-success" id="successAlert" style="display: none;">
+                ✅ Séance enregistrée avec succès !
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let trainingData = {
+            startDate: '2025-01-01',
+            swimming: {
+                sessions: [],
+                tests: {
+                    month2: { crawl100m: null, crawl400m: null, maxDistance: null },
+                    month4: { crawl100m: null, sprint50m: null },
+                    month6: { crawl100m: null, sprint50m: null, crawl1000m: null, butterfly50m: null }
+                }
+            },
+            running: {
+                sessions: [],
+                tests: {
+                    month2: { time5k: null, pace: null, hr: null },
+                    month4: { time5k: null, pace: null, hr: null },
+                    month6: { time5k: null, time10k: null }
+                },
+                kneeStatus: []
+            },
+            weight: []
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const saved = localStorage.getItem('trainingData');
+            if (saved) {
+                trainingData = JSON.parse(saved);
+            }
+            updateDashboard();
+            initCharts();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('trainingData', JSON.stringify(trainingData));
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Update dashboard statistics
+        function updateDashboard() {
+            const currentWeek = getCurrentWeek();
+            document.getElementById('currentWeek').textContent = currentWeek;
+            document.getElementById('overallProgress').textContent = Math.round((currentWeek / 24) * 100);
+            
+            const days = Math.floor((new Date() - new Date(trainingData.startDate)) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysElapsed').textContent = days;
+
+            // Calculate weekly volumes
+            const weekSessions = getWeekSessions(currentWeek);
+            const swimVolume = weekSessions.swimming.reduce((sum, s) => sum + (s.distance || 0), 0);
+            const runVolume = weekSessions.running.reduce((sum, s) => sum + (s.distance || 0), 0);
+            
+            document.getElementById('swimWeekly').textContent = swimVolume + 'm';
+            document.getElementById('runWeekly').textContent = runVolume.toFixed(1) + 'km';
+
+            // Sessions completed
+            const totalSessions = trainingData.swimming.sessions.length + trainingData.running.sessions.length;
+            const expectedSessions = currentWeek * 6; // 3 swim + 3 run per week
+            document.getElementById('sessionsCompleted').textContent = `${totalSessions}/${expectedSessions}`;
+            document.getElementById('completionRate').textContent = Math.round((totalSessions / expectedSessions) * 100) + '%';
+
+            // Weight
+            if (trainingData.weight.length > 0) {
+                const latestWeight = trainingData.weight[trainingData.weight.length - 1];
+                const firstWeight = trainingData.weight[0];
+                document.getElementById('currentWeight').textContent = latestWeight.value + 'kg';
+                document.getElementById('weightChange').textContent = (latestWeight.value - firstWeight.value).toFixed(1) + 'kg';
+            }
+
+            updateKneeStatus();
+        }
+
+        // Get current week number
+        function getCurrentWeek() {
+            const start = new Date(trainingData.startDate);
+            const now = new Date();
+            const diffTime = Math.abs(now - start);
+            const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
+            return Math.min(diffWeeks, 24);
+        }
+
+        // Get sessions for a specific week
+        function getWeekSessions(weekNumber) {
+            const startDate = new Date(trainingData.startDate);
+            const weekStart = new Date(startDate.getTime() + (weekNumber - 1) * 7 * 24 * 60 * 60 * 1000);
+            const weekEnd = new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+            return {
+                swimming: trainingData.swimming.sessions.filter(s => {
+                    const date = new Date(s.date);
+                    return date >= weekStart && date < weekEnd;
+                }),
+                running: trainingData.running.sessions.filter(s => {
+                    const date = new Date(s.date);
+                    return date >= weekStart && date < weekEnd;
+                })
+            };
+        }
+
+        // Update knee status
+        function updateKneeStatus() {
+            const recentSessions = trainingData.running.sessions.slice(-5);
+            if (recentSessions.length === 0) return;
+
+            const avgSwelling = recentSessions.reduce((sum, s) => sum + (s.kneeSwelling || 0), 0) / recentSessions.length;
+            const hasPain = recentSessions.some(s => s.kneePain !== 'none');
+
+            const statusDiv = document.getElementById('kneeStatus');
+            const indicator = statusDiv.querySelector('.knee-indicator');
+            
+            if (avgSwelling < 2 && !hasPain) {
+                indicator.className = 'knee-indicator knee-ok';
+                indicator.textContent = '✅';
+                statusDiv.querySelector('div div:first-child').textContent = 'État : Excellent';
+            } else if (avgSwelling < 5 || hasPain) {
+                indicator.className = 'knee-indicator knee-warning';
+                indicator.textContent = '⚠️';
+                statusDiv.querySelector('div div:first-child').textContent = 'État : Surveillance';
+            } else {
+                indicator.className = 'knee-indicator knee-danger';
+                indicator.textContent = '🔴';
+                statusDiv.querySelector('div div:first-child').textContent = 'État : Attention !';
+            }
+
+            statusDiv.querySelector('div div:last-child').textContent = 
+                `Gonflement moyen : ${avgSwelling.toFixed(1)}/10 | Dernière séance : ${hasPain ? 'Douleur signalée' : 'Aucune douleur'}`;
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Volume Chart
+            const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+            new Chart(volumeCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 24}, (_, i) => `S${i+1}`),
+                    datasets: [{
+                        label: 'Natation (m)',
+                        data: getWeeklyVolumes('swimming'),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Course (km)',
+                        data: getWeeklyVolumes('running'),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Natation (m)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Course (km)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Swimming Progress Chart
+            const swimCtx = document.getElementById('swimProgressChart').getContext('2d');
+            new Chart(swimCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Semaine 1-4', 'Semaine 5-8', 'Semaine 9-12', 'Semaine 13-16', 'Semaine 17-20', 'Semaine 21-24'],
+                    datasets: [{
+                        label: 'Volume moyen (m)',
+                        data: [2000, 2200, 2600, 2800, 3000, 3100],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: '#3b82f6',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Mètres'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Swimming Tests Chart
+            const swimTestCtx = document.getElementById('swimTestsChart').getContext('2d');
+            new Chart(swimTestCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mois 2', 'Mois 4', 'Mois 6'],
+                    datasets: [{
+                        label: '100m Crawl (secondes)',
+                        data: [null, null, null],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            reverse: true,
+                            title: {
+                                display: true,
+                                text: 'Temps (secondes)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Running Progress Chart
+            const runCtx = document.getElementById('runProgressChart').getContext('2d');
+            new Chart(runCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 24}, (_, i) => `S${i+1}`),
+                    datasets: [{
+                        label: 'Distance moyenne (km)',
+                        data: getWeeklyAverages('running'),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Kilomètres'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Running Tests Chart
+            const runTestCtx = document.getElementById('runTestsChart').getContext('2d');
+            new Chart(runTestCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['5km Mois 2', '5km Mois 4', '5km Mois 6', '10km Mois 6'],
+                    datasets: [{
+                        label: 'Temps (minutes)',
+                        data: [null, null, null, null],
+                        backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Minutes'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Get weekly volumes
+        function getWeeklyVolumes(activity) {
+            const volumes = [];
+            for (let week = 1; week <= 24; week++) {
+                const sessions = getWeekSessions(week)[activity];
+                const volume = sessions.reduce((sum, s) => sum + (s.distance || 0), 0);
+                volumes.push(volume);
+            }
+            return volumes;
+        }
+
+        // Get weekly averages
+        function getWeeklyAverages(activity) {
+            const averages = [];
+            for (let week = 1; week <= 24; week++) {
+                const sessions = getWeekSessions(week)[activity];
+                if (sessions.length === 0) {
+                    averages.push(0);
+                } else {
+                    const avg = sessions.reduce((sum, s) => sum + (s.distance || 0), 0) / sessions.length;
+                    averages.push(avg);
+                }
+            }
+            return averages;
+        }
+
+        // Update form fields based on activity type
+        function updateFormFields() {
+            const activityType = document.getElementById('activityType').value;
+            document.getElementById('swimFields').style.display = activityType === 'swimming' ? 'block' : 'none';
+            document.getElementById('runFields').style.display = activityType === 'running' ? 'block' : 'none';
+        }
+
+        // Save session
+        function saveSession() {
+            const activityType = document.getElementById('activityType').value;
+            const date = document.getElementById('sessionDate').value;
+            const type = document.getElementById('sessionType').value;
+            const notes = document.getElementById('sessionNotes').value;
+
+            if (!date) {
+                alert('Veuillez sélectionner une date');
+                return;
+            }
+
+            const session = {
+                date: date,
+                type: type,
+                notes: notes
+            };
+
+            if (activityType === 'swimming') {
+                session.distance = parseInt(document.getElementById('swimDistance').value) || 0;
+                session.duration = parseInt(document.getElementById('swimDuration').value) || 0;
+                session.feeling = document.getElementById('swimFeeling').value;
+                trainingData.swimming.sessions.push(session);
+            } else {
+                session.distance = parseFloat(document.getElementById('runDistance').value) || 0;
+                session.time = document.getElementById('runTime').value;
+                session.hr = parseInt(document.getElementById('runHR').value) || 0;
+                session.kneeSwelling = parseInt(document.getElementById('kneeSwelling').value) || 0;
+                session.kneePain = document.getElementById('kneePain').value;
+                session.feeling = document.getElementById('runFeeling').value;
+                trainingData.running.sessions.push(session);
+            }
+
+            saveData();
+            updateDashboard();
+            
+            // Show success message
+            const alert = document.getElementById('successAlert');
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+
+            // Reset form
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionNotes').value = '';
+            if (activityType === 'swimming') {
+                document.getElementById('swimDistance').value = '';
+                document.getElementById('swimDuration').value = '';
+            } else {
+                document.getElementById('runDistance').value = '';
+                document.getElementById('runTime').value = '';
+                document.getElementById('runHR').value = '';
+                document.getElementById('kneeSwelling').value = '';
+            }
+        }
+
+        // Change week display
+        let currentSwimWeek = 1;
+        let currentRunWeek = 1;
+
+        function changeWeek(activity, direction) {
+            if (activity === 'swim') {
+                currentSwimWeek = Math.max(1, Math.min(24, currentSwimWeek + direction));
+                document.getElementById('swimWeekNumber').textContent = currentSwimWeek;
+                displayWeekSessions('swimming', currentSwimWeek);
+            } else {
+                currentRunWeek = Math.max(1, Math.min(24, currentRunWeek + direction));
+                document.getElementById('runWeekNumber').textContent = currentRunWeek;
+                displayWeekSessions('running', currentRunWeek);
+            }
+        }
+
+        // Display sessions for a specific week
+        function displayWeekSessions(activity, weekNumber) {
+            const sessions = getWeekSessions(weekNumber)[activity];
+            const container = activity === 'swimming' ? 
+                document.getElementById('swimSessions') : 
+                document.getElementById('runSessions');
+
+            if (sessions.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 40px; color: #64748b;">Aucune séance enregistrée pour cette semaine</p>';
+                return;
+            }
+
+            container.innerHTML = sessions.map(session => {
+                const date = new Date(session.date);
+                const dayName = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'][date.getDay()];
+                const dateStr = `${dayName} ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                
+                const typeClass = session.type === 'endurance' ? 'type-endurance' : 
+                                 session.type === 'speed' ? 'type-speed' : 'type-technique';
+                
+                const emoji = session.feeling === 'great' ? '😊' : 
+                             session.feeling === 'good' ? '😐' : '😓';
+
+                if (activity === 'swimming') {
+                    return `
+                        <div class="session-card">
+                            <div class="session-header">
+                                <div class="session-date">${dateStr}</div>
+                                <span class="session-type ${typeClass}">${session.type}</span>
+                            </div>
+                            <div class="session-stats">
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Distance</div>
+                                    <div class="session-stat-value">${session.distance}m</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Durée</div>
+                                    <div class="session-stat-value">${session.duration}min</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Sensations</div>
+                                    <div class="session-stat-value emoji-rating">${emoji}</div>
+                                </div>
+                            </div>
+                            ${session.notes ? `<div class="session-notes"><strong>Notes :</strong> ${session.notes}</div>` : ''}
+                        </div>
+                    `;
+                } else {
+                    const pace = session.time && session.distance ? 
+                        calculatePace(session.time, session.distance) : '--';
+                    
+                    return `
+                        <div class="session-card">
+                            <div class="session-header">
+                                <div class="session-date">${dateStr}</div>
+                                <span class="session-type ${typeClass}">${session.type}</span>
+                            </div>
+                            <div class="session-stats">
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Distance</div>
+                                    <div class="session-stat-value">${session.distance}km</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Temps</div>
+                                    <div class="session-stat-value">${session.time}</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Allure</div>
+                                    <div class="session-stat-value">${pace}</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">FC moy</div>
+                                    <div class="session-stat-value">${session.hr}bpm</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Genou</div>
+                                    <div class="session-stat-value">${session.kneeSwelling}/10</div>
+                                </div>
+                                <div class="session-stat">
+                                    <div class="session-stat-label">Sensations</div>
+                                    <div class="session-stat-value emoji-rating">${emoji}</div>
+                                </div>
+                            </div>
+                            ${session.notes ? `<div class="session-notes"><strong>Notes :</strong> ${session.notes}</div>` : ''}
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Calculate pace
+        function calculatePace(timeStr, distance) {
+            const parts = timeStr.split(':');
+            const totalSeconds = parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + (parseInt(parts[2]) || 0);
+            const paceSeconds = totalSeconds / distance;
+            const minutes = Math.floor(paceSeconds / 60);
+            const seconds = Math.floor(paceSeconds % 60);
+            return `${minutes}'${seconds.toString().padStart(2, '0')}"/km`;
+        }
+
+        // Set today's date as default
+        document.getElementById('sessionDate').valueAsDate = new Date();
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            loadData();
+            document.getElementById('startDate').textContent = new Date(trainingData.startDate).toLocaleDateString('fr-FR');
+        });
+    </script>
+</body>
+</html>group">
+                            <label class="form-label">Distance (mètres)</label>
+                            <input type="number" class="form-input" id="swimDistance" placeholder="2200">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Durée (minutes)</label>
+                            <input type="number" class="form-input" id="swimDuration" placeholder="60">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sensations</label>
+                            <select class="form-input" id="swimFeeling">
+                                <option value="great">😊 Excellentes</option>
+                                <option value="good">😐 Bonnes</option>
+                                <option value="tired">😓 Fatigué</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Running specific fields -->
+                <div id="runFields" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Distance (km)</label>
+                            <input type="number" step="0.1" class="form-input" id="runDistance" placeholder="5.0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Temps (format HH:MM:SS)</label>
+                            <input type="text" class="form-input" id="runTime" placeholder="00:28:30">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">FC moyenne (bpm)</label>
+                            <input type="number" class="form-input" id="runHR" placeholder="145">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Gonflement genou (0-10)</label>
+                            <input type="number" min="0" max="10" class="form-input" id="kneeSwelling" placeholder="2">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Douleur genou</label>
+                            <select class="form-input" id="kneePain">
+                                <option value="none">✅ Aucune</option>
+                                <option value="light">⚠️ Légère</option>
+                                <option value="moderate">🔴 Modérée</option>
+                            </select>
+                        </div>
+
+                        <div class="form-
