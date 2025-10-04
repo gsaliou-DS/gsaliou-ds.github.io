@@ -731,6 +731,15 @@
                 </div>
             </div>
 
+            <div class="chart-container">
+                <h2 class="chart-title">📥 Importer planning depuis PDF</h2>
+                <p style="color: #64748b;">Sélectionnez le PDF de votre feuille de route (ex: "Feuille de Route Course à Pied 6 Mois - Reprise Post-LCA.pdf").</p>
+                <input id="pdfFileInput" type="file" accept="application/pdf" style="display:block; margin:10px 0;" />
+                <label style="display:block; margin-bottom:8px;"><input id="onlyFutureCheckbox" type="checkbox" checked /> Importer uniquement les séances futures</label>
+                <button id="importPdfBtn" class="btn-primary">Importer depuis PDF</button>
+                <div id="importStatus" style="margin-top:12px; color: #64748b;"></div>
+            </div>
+
             <div class="week-log">
                 <div class="week-header">
                     <div class="week-title">Semaine <span id="runWeekNumber">1</span></div>
@@ -1392,6 +1401,133 @@
                 `;
             }).join('');
         }
+
+        // --- PDF import helpers (uses pdf.js via CDN) ---
+        async function loadPdfJs() {
+            if (window.pdfjsLib) return window.pdfjsLib;
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.min.js';
+                script.onload = () => {
+                    // set workerSrc to CDN worker
+                    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.worker.min.js';
+                    resolve(window.pdfjsLib);
+                };
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        async function extractTextFromPdf(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfjs = await loadPdfJs();
+            const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
+            let text = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                const pageText = content.items.map(it => it.str).join(' ');
+                text += '\n' + pageText;
+            }
+            return text;
+        }
+
+        // Very small parser to find dates (dd/mm/yyyy or dd/mm) and distances in km or m
+        function parseSessionsFromText(text, onlyFuture = true) {
+            const sessions = [];
+            // Normalize
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+            // Regex patterns
+            const dateFull = /(\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b)/g; // dd/mm/yyyy
+            const dateShort = /(\b\d{1,2}[\/\-]\d{1,2}\b)/g; // dd/mm
+            const kmPat = /(\d+[\.,]?\d*)\s?km\b/i;
+            const mPat = /(\d+)\s?m\b/i;
+
+            for (const line of lines) {
+                // find date
+                let dateMatch = line.match(dateFull) || line.match(dateShort);
+                let kmMatch = line.match(kmPat);
+                let mMatch = line.match(mPat);
+                if (dateMatch && (kmMatch || mMatch)) {
+                    const dateStr = dateMatch[0];
+                    // parse date (assume current year if missing)
+                    let dParts = dateStr.split(/[\/\-]/).map(x => parseInt(x, 10));
+                    let day = dParts[0], month = dParts[1], year = dParts[2] || new Date().getFullYear();
+                    if (year < 100) year += 2000;
+                    const dateObj = new Date(year, month - 1, day);
+
+                    let distance = 0;
+                    if (kmMatch) {
+                        distance = parseFloat(kmMatch[1].replace(',', '.'));
+                    } else if (mMatch) {
+                        distance = parseInt(mMatch[1], 10) / 1000.0;
+                    }
+
+                    if (!onlyFuture || dateObj >= new Date()) {
+                        sessions.push({ date: dateObj.toISOString().split('T')[0], type: 'endurance', distance: distance, time: null, notes: line });
+                    }
+                }
+            }
+
+            return sessions;
+        }
+
+        async function handlePdfImport(file, onlyFuture) {
+            const status = document.getElementById('importStatus');
+            try {
+                status.textContent = 'Lecture du PDF...';
+                const text = await extractTextFromPdf(file);
+                status.textContent = 'Analyse du contenu...';
+                const parsed = parseSessionsFromText(text, onlyFuture);
+                if (parsed.length === 0) {
+                    status.textContent = 'Aucune séance détectée dans le PDF.';
+                    return 0;
+                }
+
+                // Merge parsed sessions into trainingData.running.sessions, avoid duplicates by date+distance
+                const existingKeys = new Set(trainingData.running.sessions.map(s => `${s.date}|${s.distance}`));
+                let added = 0;
+                for (const s of parsed) {
+                    const key = `${s.date}|${s.distance}`;
+                    if (!existingKeys.has(key)) {
+                        trainingData.running.sessions.push(s);
+                        existingKeys.add(key);
+                        added++;
+                    }
+                }
+                if (added > 0) {
+                    saveData();
+                    updateDashboard();
+                    displayUpcomingRuns();
+                    status.textContent = `Import terminé — ${added} séance(s) ajoutée(s).`;
+                } else {
+                    status.textContent = 'Aucun ajout (séances déjà présentes).';
+                }
+                return added;
+            } catch (e) {
+                console.error(e);
+                status.textContent = 'Erreur lors de l’import du PDF.';
+                return 0;
+            }
+        }
+
+        // Wire the import button
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('pdfFileInput');
+            const btn = document.getElementById('importPdfBtn');
+            btn && btn.addEventListener('click', async () => {
+                const status = document.getElementById('importStatus');
+                if (!input || input.files.length === 0) {
+                    status.textContent = 'Veuillez choisir un fichier PDF.';
+                    return;
+                }
+                const onlyFuture = document.getElementById('onlyFutureCheckbox').checked;
+                const file = input.files[0];
+                status.textContent = '';
+                await handlePdfImport(file, onlyFuture);
+            });
+        });
 
         // Calculate pace
         function calculatePace(timeStr, distance) {
