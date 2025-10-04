@@ -733,41 +733,7 @@
                     </div>
                 </div>
                 <div id="runSessions">
-                    <div class="session-card">
-                        <div class="session-header">
-                            <div class="session-date">Mardi 02/01</div>
-                            <span class="session-type type-endurance">Endurance fondamentale</span>
-                        </div>
-                        <div class="session-stats">
-                            <div class="session-stat">
-                                <div class="session-stat-label">Distance</div>
-                                <div class="session-stat-value">4.2km</div>
-                            </div>
-                            <div class="session-stat">
-                                <div class="session-stat-label">Temps</div>
-                                <div class="session-stat-value">30min</div>
-                            </div>
-                            <div class="session-stat">
-                                <div class="session-stat-label">Allure</div>
-                                <div class="session-stat-value">7'08"/km</div>
-                            </div>
-                            <div class="session-stat">
-                                <div class="session-stat-label">FC moy</div>
-                                <div class="session-stat-value">145bpm</div>
-                            </div>
-                            <div class="session-stat">
-                                <div class="session-stat-label">Genou</div>
-                                <div class="session-stat-value">2/10</div>
-                            </div>
-                            <div class="session-stat">
-                                <div class="session-stat-label">Sensations</div>
-                                <div class="session-stat-value emoji-rating">😊</div>
-                            </div>
-                        </div>
-                        <div class="session-notes">
-                            <strong>Notes :</strong> Première sortie post-LCA. Léger gonflement (normal). Glace 15min appliquée. Aucune douleur pendant la course.
-                        </div>
-                    </div>
+                    <!-- Sessions will be populated by JavaScript -->
                 </div>
             </div>
 
@@ -1384,13 +1350,17 @@
             return `${minutes}'${seconds.toString().padStart(2, '0')}"/km`;
         }
 
-        // Set today's date as default
-        document.getElementById('sessionDate').valueAsDate = new Date();
-
         // Initialize on page load
         window.addEventListener('load', () => {
             loadData();
             document.getElementById('startDate').textContent = new Date(trainingData.startDate).toLocaleDateString('fr-FR');
+            // Populate week session lists for current weeks
+            try {
+                displayWeekSessions('swimming', currentSwimWeek);
+                displayWeekSessions('running', currentRunWeek);
+            } catch (e) {
+                // ignore if functions or elements are not present
+            }
         });
     </script>
 </body>
