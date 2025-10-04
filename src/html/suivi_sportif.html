@@ -860,6 +860,21 @@
             weight: []
         };
 
+        // If URL contains ?reset=1 or hash #reset, clear saved trainingData so defaults are used
+        (function handleResetParam() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('reset') === '1' || window.location.hash === '#reset') {
+                    localStorage.removeItem('trainingData');
+                    console.info('trainingData cleared from localStorage due to reset param');
+                    // optional: reload to ensure UI reflects defaults on first load
+                    // location.reload();
+                }
+            } catch (e) {
+                // ignore in environments where URLSearchParams isn't available
+            }
+        })();
+
         // Load data from localStorage
         function loadData() {
             const saved = localStorage.getItem('trainingData');
