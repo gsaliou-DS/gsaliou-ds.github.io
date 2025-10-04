@@ -777,63 +777,6 @@
                 <canvas id="runTestsChart"></canvas>
             </div>
         </div>
-
-        <!-- LOG TAB -->
-        <div id="log" class="tab-content">
-            <div class="form-section">
-                <h2 class="form-title">📝 Ajouter une séance</h2>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Type d'activité</label>
-                        <select class="form-input" id="activityType" onchange="updateFormFields()">
-                            <option value="swimming">🏊 Natation</option>
-                            <option value="running">🏃 Course à pied</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-input" id="sessionDate">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Type de séance</label>
-                        <select class="form-input" id="sessionType">
-                            <option value="endurance">Endurance</option>
-                            <option value="speed">Vitesse</option>
-                            <option value="technique">Technique</option>
-                            <option value="mixed">Mixte</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Swimming specific fields -->
-                <div id="swimFields">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Sensations</label>
-                            <select class="form-input" id="runFeeling">
-                                <option value="great">😊 Excellentes</option>
-                                <option value="good">😐 Bonnes</option>
-                                <option value="tired">😓 Fatigué</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Notes</label>
-                    <textarea class="form-input form-textarea" id="sessionNotes" placeholder="Observations, sensations, points à améliorer..."></textarea>
-                </div>
-
-                <button class="btn-primary" onclick="saveSession()">💾 Enregistrer la séance</button>
-            </div>
-
-            <div class="alert alert-success" id="successAlert" style="display: none;">
-                ✅ Séance enregistrée avec succès !
-            </div>
-        </div>
     </div>
 
     <script>
