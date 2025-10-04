@@ -724,6 +724,13 @@
                 <canvas id="runProgressChart"></canvas>
             </div>
 
+            <div class="chart-container">
+                <h2 class="chart-title">📅 Prochaines sorties (Course à pied)</h2>
+                <div id="upcomingRuns">
+                    <p style="color: #64748b; text-align: center; padding: 20px;">Aucune sortie planifiée.</p>
+                </div>
+            </div>
+
             <div class="week-log">
                 <div class="week-header">
                     <div class="week-title">Semaine <span id="runWeekNumber">1</span></div>
@@ -1340,6 +1347,52 @@
             }).join('');
         }
 
+        // Return upcoming sessions (from now) for an activity, limited to `count`
+        function getUpcomingSessions(activity, count = 3) {
+            const now = new Date();
+            const sessions = (activity === 'swimming' ? trainingData.swimming.sessions : trainingData.running.sessions)
+                .map(s => Object.assign({}, s, { _dateObj: new Date(s.date) }))
+                .filter(s => s._dateObj >= now)
+                .sort((a, b) => a._dateObj - b._dateObj);
+            return sessions.slice(0, count);
+        }
+
+        // Display upcoming running sessions in the running tab
+        function displayUpcomingRuns() {
+            const upcoming = getUpcomingSessions('running', 3);
+            const container = document.getElementById('upcomingRuns');
+            if (!container) return;
+            if (upcoming.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 20px;">Aucune sortie planifiée.</p>';
+                return;
+            }
+
+            container.innerHTML = upcoming.map(s => {
+                const d = new Date(s.date);
+                const dateStr = d.toLocaleDateString('fr-FR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+                const time = s.time || '--:--:--';
+                return `
+                    <div class="session-card">
+                        <div class="session-header">
+                            <div class="session-date">${dateStr}</div>
+                            <span class="session-type type-endurance">${s.type || 'run'}</span>
+                        </div>
+                        <div class="session-stats">
+                            <div class="session-stat">
+                                <div class="session-stat-label">Distance</div>
+                                <div class="session-stat-value">${(s.distance || 0)}km</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="session-stat-label">Temps</div>
+                                <div class="session-stat-value">${time}</div>
+                            </div>
+                        </div>
+                        ${s.notes ? `<div class="session-notes"><strong>Notes :</strong> ${s.notes}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
         // Calculate pace
         function calculatePace(timeStr, distance) {
             const parts = timeStr.split(':');
@@ -1358,6 +1411,8 @@
             try {
                 displayWeekSessions('swimming', currentSwimWeek);
                 displayWeekSessions('running', currentRunWeek);
+                // Upcoming runs widget
+                displayUpcomingRuns();
             } catch (e) {
                 // ignore if functions or elements are not present
             }
