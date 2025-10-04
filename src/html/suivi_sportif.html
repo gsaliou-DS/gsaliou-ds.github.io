@@ -830,10 +830,47 @@
         })();
 
         // Load data from localStorage
+        // Merge strategy: keep the hardcoded defaults (e.g. hardcoded sessions)
+        // unless the saved data actually contains non-empty arrays/values.
         function loadData() {
             const saved = localStorage.getItem('trainingData');
             if (saved) {
-                trainingData = JSON.parse(saved);
+                try {
+                    const s = JSON.parse(saved);
+                    // startDate: prefer saved value if present
+                    if (s.startDate) trainingData.startDate = s.startDate;
+
+                    // Swimming: merge sessions only if saved has non-empty sessions
+                    if (s.swimming) {
+                        if (Array.isArray(s.swimming.sessions) && s.swimming.sessions.length > 0) {
+                            trainingData.swimming.sessions = s.swimming.sessions;
+                        }
+                        // merge tests if present
+                        if (s.swimming.tests) {
+                            trainingData.swimming.tests = Object.assign({}, trainingData.swimming.tests, s.swimming.tests);
+                        }
+                    }
+
+                    // Running: merge sessions only if saved has non-empty sessions
+                    if (s.running) {
+                        if (Array.isArray(s.running.sessions) && s.running.sessions.length > 0) {
+                            trainingData.running.sessions = s.running.sessions;
+                        }
+                        if (s.running.tests) {
+                            trainingData.running.tests = Object.assign({}, trainingData.running.tests, s.running.tests);
+                        }
+                        if (Array.isArray(s.running.kneeStatus) && s.running.kneeStatus.length > 0) {
+                            trainingData.running.kneeStatus = s.running.kneeStatus;
+                        }
+                    }
+
+                    // Weight
+                    if (Array.isArray(s.weight) && s.weight.length > 0) {
+                        trainingData.weight = s.weight;
+                    }
+                } catch (e) {
+                    console.warn('Could not parse saved trainingData, using defaults', e);
+                }
             }
             updateDashboard();
             initCharts();
