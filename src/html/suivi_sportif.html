@@ -128,7 +128,62 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-    .dashboard {
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
         .stat-change.negative {
             color: var(--danger);
         }
@@ -508,7 +563,7 @@
             <button class="tab active" onclick="switchTab('dashboard')">📊 Tableau de bord</button>
             <button class="tab" onclick="switchTab('swimming')">🏊 Natation</button>
             <button class="tab" onclick="switchTab('running')">🏃 Course à pied</button>
-            <!-- 'Ajouter séance' tab removed -->
+            <button class="tab" onclick="switchTab('log')">📝 Ajouter séance</button>
         </div>
 
         <!-- DASHBOARD TAB -->
@@ -723,7 +778,62 @@
             </div>
         </div>
 
-        <!-- LOG TAB removed: adding sessions UI was intentionally removed; sessions will be hardcoded -->
+        <!-- LOG TAB -->
+        <div id="log" class="tab-content">
+            <div class="form-section">
+                <h2 class="form-title">📝 Ajouter une séance</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Type d'activité</label>
+                        <select class="form-input" id="activityType" onchange="updateFormFields()">
+                            <option value="swimming">🏊 Natation</option>
+                            <option value="running">🏃 Course à pied</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="sessionDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Type de séance</label>
+                        <select class="form-input" id="sessionType">
+                            <option value="endurance">Endurance</option>
+                            <option value="speed">Vitesse</option>
+                            <option value="technique">Technique</option>
+                            <option value="mixed">Mixte</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Swimming specific fields -->
+                <div id="swimFields">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Sensations</label>
+                            <select class="form-input" id="runFeeling">
+                                <option value="great">😊 Excellentes</option>
+                                <option value="good">😐 Bonnes</option>
+                                <option value="tired">😓 Fatigué</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-input form-textarea" id="sessionNotes" placeholder="Observations, sensations, points à améliorer..."></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="saveSession()">💾 Enregistrer la séance</button>
+            </div>
+
+            <div class="alert alert-success" id="successAlert" style="display: none;">
+                ✅ Séance enregistrée avec succès !
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1103,7 +1213,69 @@
             return averages;
         }
 
-        // Add-session UI and functions removed (sessions will be hardcoded).
+        // Update form fields based on activity type
+        function updateFormFields() {
+            const activityType = document.getElementById('activityType').value;
+            document.getElementById('swimFields').style.display = activityType === 'swimming' ? 'block' : 'none';
+            document.getElementById('runFields').style.display = activityType === 'running' ? 'block' : 'none';
+        }
+
+        // Save session
+        function saveSession() {
+            const activityType = document.getElementById('activityType').value;
+            const date = document.getElementById('sessionDate').value;
+            const type = document.getElementById('sessionType').value;
+            const notes = document.getElementById('sessionNotes').value;
+
+            if (!date) {
+                alert('Veuillez sélectionner une date');
+                return;
+            }
+
+            const session = {
+                date: date,
+                type: type,
+                notes: notes
+            };
+
+            if (activityType === 'swimming') {
+                session.distance = parseInt(document.getElementById('swimDistance').value) || 0;
+                session.duration = parseInt(document.getElementById('swimDuration').value) || 0;
+                session.feeling = document.getElementById('swimFeeling').value;
+                trainingData.swimming.sessions.push(session);
+            } else {
+                session.distance = parseFloat(document.getElementById('runDistance').value) || 0;
+                session.time = document.getElementById('runTime').value;
+                session.hr = parseInt(document.getElementById('runHR').value) || 0;
+                session.kneeSwelling = parseInt(document.getElementById('kneeSwelling').value) || 0;
+                session.kneePain = document.getElementById('kneePain').value;
+                session.feeling = document.getElementById('runFeeling').value;
+                trainingData.running.sessions.push(session);
+            }
+
+            saveData();
+            updateDashboard();
+            
+            // Show success message
+            const alert = document.getElementById('successAlert');
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+
+            // Reset form
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionNotes').value = '';
+            if (activityType === 'swimming') {
+                document.getElementById('swimDistance').value = '';
+                document.getElementById('swimDuration').value = '';
+            } else {
+                document.getElementById('runDistance').value = '';
+                document.getElementById('runTime').value = '';
+                document.getElementById('runHR').value = '';
+                document.getElementById('kneeSwelling').value = '';
+            }
+        }
 
         // Change week display
         let currentSwimWeek = 1;
@@ -1221,7 +1393,8 @@
             return `${minutes}'${seconds.toString().padStart(2, '0')}"/km`;
         }
 
-    // sessionDate input removed — no automatic initialization needed
+        // Set today's date as default
+        document.getElementById('sessionDate').valueAsDate = new Date();
 
         // Initialize on page load
         window.addEventListener('load', () => {
@@ -1230,7 +1403,57 @@
         });
     </script>
 </body>
-</html>
+</html>group">
                             <label class="form-label">Distance (mètres)</label>
-
                             <input type="number" class="form-input" id="swimDistance" placeholder="2200">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Durée (minutes)</label>
+                            <input type="number" class="form-input" id="swimDuration" placeholder="60">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sensations</label>
+                            <select class="form-input" id="swimFeeling">
+                                <option value="great">😊 Excellentes</option>
+                                <option value="good">😐 Bonnes</option>
+                                <option value="tired">😓 Fatigué</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Running specific fields -->
+                <div id="runFields" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Distance (km)</label>
+                            <input type="number" step="0.1" class="form-input" id="runDistance" placeholder="5.0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Temps (format HH:MM:SS)</label>
+                            <input type="text" class="form-input" id="runTime" placeholder="00:28:30">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">FC moyenne (bpm)</label>
+                            <input type="number" class="form-input" id="runHR" placeholder="145">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Gonflement genou (0-10)</label>
+                            <input type="number" min="0" max="10" class="form-input" id="kneeSwelling" placeholder="2">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Douleur genou</label>
+                            <select class="form-input" id="kneePain">
+                                <option value="none">✅ Aucune</option>
+                                <option value="light">⚠️ Légère</option>
+                                <option value="moderate">🔴 Modérée</option>
+                            </select>
+                        </div>
+
+                        <div class="form-
