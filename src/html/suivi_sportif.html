@@ -765,7 +765,16 @@
         let trainingData = {
             startDate: '2025-10-04',
             swimming: {
-                sessions: [],
+                sessions: [
+                    {
+                        date: '2025-10-06',
+                        type: 'endurance',
+                        distance: 1800,
+                        duration: 45,
+                        feeling: 'good',
+                        notes: 'Séance planifiée: endurance 1800m'
+                    }
+                ],
                 tests: {
                     month2: { crawl100m: null, crawl400m: null, maxDistance: null },
                     month4: { crawl100m: null, sprint50m: null },
@@ -784,6 +793,17 @@
                         kneePain: 'none',
                         feeling: 'good',
                         notes: 'Lunch Run — reprise tout doux 6 mois après LCA'
+                    }
+                    ,{
+                        date: '2026-03-07',
+                        type: 'endurance',
+                        distance: 4.07,
+                        time: '00:30:00',
+                        hr: 140,
+                        kneeSwelling: 0,
+                        kneePain: 'none',
+                        feeling: 'good',
+                        notes: '5min marche avant, 30min de course (dont 20min à 6:40/km), 5min marche après. FC moy 140bpm.'
                     }
                 ],
                 tests: {
