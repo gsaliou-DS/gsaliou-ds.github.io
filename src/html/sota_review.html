@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="État de l'art - Modèles ML pour la prévision météorologique" />
+  <meta name="keywords" content="Machine Learning, Weather Forecasting, ERA5, AIFS, GraphCast, AI Models" />
+  <meta name="author" content="Gwendal SALIOU" />
+  
+  <title>SOTA - Modèles ML Météo | Gwendal SALIOU</title>
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav role="navigation" aria-label="Navigation principale">
+        <a href="/" aria-label="Retour à l'accueil">Accueil</a>
+        <a href="#overview" aria-label="Vue d'ensemble">Vue d'ensemble</a>
+        <a href="#models" aria-label="Modèles principaux">Modèles</a>
+        <a href="#innovations" aria-label="Innovations">Innovations</a>
+        <a href="#challenges" aria-label="Défis">Défis</a>
+        <a href="#resources" aria-label="Ressources">Ressources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" role="banner">
+      <div class="container">
+        <h1>État de l'Art</h1>
+        <p>Modèles déterministes d'apprentissage automatique<br>pour la prévision météorologique avec ERA5</p>
+        <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.9;">Mis à jour : Octobre 2025</p>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <h2>🌍 Vue d'Ensemble</h2>
+        <p>
+          La période 2024-2025 marque une <strong>transition historique</strong> de la prévision météorologique par apprentissage automatique, passant de la recherche expérimentale au <strong>déploiement opérationnel</strong>.
+        </p>
+        <p>
+          Le <strong>25 février 2025</strong>, le Centre Européen de Prévisions Météorologiques à Moyen Terme (ECMWF) a mis en service opérationnel son système <em>AIFS (Artificial Intelligence Forecasting System)</em>, marquant ainsi le premier engagement institutionnel majeur d'un centre météorologique dans la prévision IA. La version ensemble <em>AIFS ENS</em> a suivi le <strong>1er juillet 2025</strong>.
+        </p>
+        
+        <div class="highlight-box">
+          <h3>🎯 Points clés</h3>
+          <ul>
+            <li><strong>Efficacité computationnelle</strong> : Réduction ~1000× de la consommation énergétique</li>
+            <li><strong>Vitesse</strong> : Prévisions 10 jours en 1-2 minutes</li>
+            <li><strong>Performance</strong> : Gains jusqu'à 20% sur certaines métriques (trajectoires cycloniques)</li>
+            <li><strong>Maturité opérationnelle</strong> : Support 24/7 pour les services météo nationaux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="models" class="section">
+      <div class="container">
+        <h2>🤖 Modèles Principaux</h2>
+        
+        <div class="model-grid">
+          <div class="model-card">
+            <h3>AIFS (ECMWF)</h3>
+            <span class="badge operational">Opérationnel</span>
+            <p><strong>Architecture :</strong> Graph Neural Networks</p>
+            <p><strong>Résolution :</strong> 28 km (déterministe), 31 km (ensemble)</p>
+            <p><strong>Innovation :</strong> Premier système IA entièrement opérationnel, 51 membres d'ensemble</p>
+            <p><strong>Performance :</strong> +20% sur trajectoires cycloniques vs. modèles physiques</p>
+            <a href="https://www.ecmwf.int/en/about/media-centre/aifs-blog" target="_blank" class="btn-small">Documentation</a>
+          </div>
+
+          <div class="model-card">
+            <h3>FengWu (Shanghai AI Lab)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> Multi-modal Transformer</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Replay buffer, traitement multi-modal des variables</p>
+            <p><strong>Performance :</strong> Meilleur modèle pour Asie de l'Est et Pacifique Ouest</p>
+            <a href="https://github.com/OpenEarthLab/ai-models-fengwu" target="_blank" class="btn-small">Code</a>
+          </div>
+
+          <div class="model-card">
+            <h3>GraphCast (DeepMind)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> GNN multi-mesh</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Maillage icosaédrique à 6 couches, fine-tuning autorégressif</p>
+            <p><strong>Performance :</strong> 90% des variables meilleures que IFS-HRES</p>
+            <a href="https://github.com/google-deepmind/graphcast" target="_blank" class="btn-small">Code</a>
+          </div>
+
+          <div class="model-card">
+            <h3>FuXi (Fudan University)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> Swin Transformer v2 cascadé</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Architecture cascadée (court/moyen/long terme)</p>
+            <p><strong>Performance :</strong> 2e meilleur pour région Pacifique, extension sous-saisonnière</p>
+            <a href="https://github.com/tpys/ai-models-fuxi" target="_blank" class="btn-small">Code</a>
+          </div>
+
+          <div class="model-card">
+            <h3>Pangu-Weather (Huawei)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> 3D Earth-Specific ViT</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Pas de temps flexibles (1, 3, 6, 24h)</p>
+            <p><strong>Performance :</strong> Meilleure prévision d'intensité des cyclones tropicaux</p>
+            <a href="https://github.com/198808xc/Pangu-Weather" target="_blank" class="btn-small">Code</a>
+          </div>
+
+          <div class="model-card">
+            <h3>FourCastNet v2 (NVIDIA)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> ViT + SFNO</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Opérateurs harmoniques sphériques pour stabilité</p>
+            <p><strong>Performance :</strong> ~7 itérations/seconde, ultra-rapide</p>
+            <a href="https://github.com/ecmwf-lab/ai-models-fourcastnetv2" target="_blank" class="btn-small">Code</a>
+          </div>
+
+          <div class="model-card">
+            <h3>Aurora (Microsoft)</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> Foundation Model</p>
+            <p><strong>Résolution :</strong> 0.25°</p>
+            <p><strong>Innovation :</strong> Pré-entraînement multi-dataset, approche modèle de fondation</p>
+            <p><strong>Performance :</strong> Prévision 10 jours + pollution de l'air</p>
+            <span class="btn-small disabled">Code partiel</span>
+          </div>
+
+          <div class="model-card">
+            <h3>KARINA</h3>
+            <span class="badge research">Recherche</span>
+            <p><strong>Architecture :</strong> ConvNeXt + SENet</p>
+            <p><strong>Résolution :</strong> 2.5°</p>
+            <p><strong>Innovation :</strong> Padding géocyclique, efficacité extrême</p>
+            <p><strong>Performance :</strong> 48h entraînement sur 4×A100, excellent pour downscaling</p>
+            <a href="#" class="btn-small">Code</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparison" class="section">
+      <div class="container">
+        <h2>📊 Tableau Comparatif</h2>
+        <div class="table-responsive">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Modèle</th>
+                <th>Organisation</th>
+                <th>Résolution</th>
+                <th>Architecture</th>
+                <th>Temps d'entraînement</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>AIFS</strong></td>
+                <td>ECMWF</td>
+                <td>28 km</td>
+                <td>Graph NN</td>
+                <td>~400h (A100)</td>
+                <td><span class="badge operational">Opérationnel</span></td>
+              </tr>
+              <tr>
+                <td><strong>FengWu</strong></td>
+                <td>Shanghai AI Lab</td>
+                <td>0.25°</td>
+                <td>Multi-modal Transformer</td>
+                <td>~300h (A100)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+              <tr>
+                <td><strong>GraphCast</strong></td>
+                <td>DeepMind</td>
+                <td>0.25°</td>
+                <td>GNN</td>
+                <td>21,504h (TPU v4)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+              <tr>
+                <td><strong>FuXi</strong></td>
+                <td>Fudan University</td>
+                <td>0.25°</td>
+                <td>Swin Transformer v2</td>
+                <td>240h (A100)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+              <tr>
+                <td><strong>Pangu-Weather</strong></td>
+                <td>Huawei</td>
+                <td>0.25°</td>
+                <td>3D Earth-Specific ViT</td>
+                <td>294,912h (V100)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+              <tr>
+                <td><strong>FourCastNet v2</strong></td>
+                <td>NVIDIA</td>
+                <td>0.25°</td>
+                <td>ViT + SFNO</td>
+                <td>~1,200h (A100)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+              <tr>
+                <td><strong>KARINA</strong></td>
+                <td>Divers</td>
+                <td>2.5°</td>
+                <td>ConvNeXt</td>
+                <td>48h (4×A100)</td>
+                <td><span class="badge research">Recherche</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="innovations" class="section">
+      <div class="container">
+        <h2>🚀 Innovations Récentes</h2>
+        
+        <div class="innovation-card">
+          <h3>🔬 Contraintes Physiques</h3>
+          <p>AIFS intègre désormais des <strong>couches de contraintes physiques</strong> (bounding layers) pour améliorer les prévisions de précipitations et respecter les lois de conservation.</p>
+        </div>
+
+        <div class="innovation-card">
+          <h3>🧩 Approches Hybrides</h3>
+          <p>Exploration de systèmes combinant <strong>modèles physiques et IA</strong> pour tirer parti de la vitesse ML et de la fiabilité physique.</p>
+        </div>
+
+        <div class="innovation-card">
+          <h3>🌐 Modèles de Fondation</h3>
+          <p>Aurora pionnier de l'approche <strong>foundation model</strong> avec pré-entraînement sur multiples datasets atmosphériques et transfer learning.</p>
+        </div>
+
+        <div class="innovation-card">
+          <h3>⚡ Efficacité Énergétique</h3>
+          <p>AIFS démontre une <strong>réduction ~1000× de la consommation énergétique</strong> comparé aux modèles physiques, permettant ensembles massifs.</p>
+        </div>
+
+        <div class="innovation-card">
+          <h3>📍 Downscaling Multi-échelle</h3>
+          <p><strong>FengWu-GHR</strong> : downscaling à l'échelle kilométrique via modélisation de diffusion résiduelle. <strong>MSCAR</strong> : couplage imagerie satellite + ERA5 pour intensité cyclonique.</p>
+        </div>
+
+        <div class="innovation-card">
+          <h3>🎲 Ensembles Multi-modèles</h3>
+          <p>Moyennage simple des prévisions de 5 modèles ML approche les performances du meilleur modèle individuel tout en <strong>réduisant les valeurs aberrantes</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="challenges" class="section">
+      <div class="container">
+        <h2>⚠️ Défis et Limitations</h2>
+        
+        <div class="challenge-grid">
+          <div class="challenge-card">
+            <h3>🌊 Prévisions Trop Lissées</h3>
+            <p>Les modèles ML sous-estiment systématiquement les <strong>pics d'événements extrêmes</strong> (vents forts, précipitations intenses) en raison des objectifs d'entraînement et techniques de régularisation.</p>
+          </div>
+
+          <div class="challenge-card">
+            <h3>🌀 Intensité des Cyclones</h3>
+            <p>Tous les modèles ML présentent des <strong>biais faibles systématiques</strong> pour l'intensité des cyclones tropicaux, avec erreurs typiques de 25-35 hPa.</p>
+          </div>
+
+          <div class="challenge-card">
+            <h3>🌴 Régions Tropicales</h3>
+            <p>Plus grands défis dans les <strong>régions tropicales</strong> vs. latitudes moyennes, probablement hérités des limites des données d'entraînement ERA5.</p>
+          </div>
+
+          <div class="challenge-card">
+            <h3>🔍 Limite de Résolution</h3>
+            <p>Tous les modèles contraints par résolution ERA5 <strong>0.25° (~31 km)</strong>, insuffisante pour phénomènes méso-échelle et prévision locale sévère.</p>
+          </div>
+
+          <div class="challenge-card">
+            <h3>💾 Dépendance aux Données</h3>
+            <p>Modèles entraînés uniquement sur réanalyses peuvent mal se généraliser en contexte opérationnel réel. <strong>Dépendance aux systèmes physiques</strong> pour initialisation.</p>
+          </div>
+
+          <div class="challenge-card">
+            <h3>🎯 Assimilation d'Observations</h3>
+            <p>Capacité limitée à assimiler directement de <strong>nouveaux types d'observations</strong> non présents dans les données d'entraînement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="performance" class="section">
+      <div class="container">
+        <h2>📈 Classement de Performance</h2>
+        <p>Évaluation homogène pour Asie de l'Est et Pacifique Ouest (Juin-Novembre 2023) :</p>
+        
+        <div class="ranking-container">
+          <div class="rank-item rank-1">
+            <span class="rank-number">1</span>
+            <div class="rank-content">
+              <h3>FengWu</h3>
+              <p>Meilleures métriques RMSE et ACC, excellente prévision de trajectoire cyclonique</p>
+            </div>
+          </div>
+
+          <div class="rank-item rank-2">
+            <span class="rank-number">2</span>
+            <div class="rank-content">
+              <h3>FuXi</h3>
+              <p>Performance globale solide, architecture cascadée efficace</p>
+            </div>
+          </div>
+
+          <div class="rank-item rank-3">
+            <span class="rank-number">3</span>
+            <div class="rank-content">
+              <h3>GraphCast</h3>
+              <p>Performances robustes, meilleure architecture GNN</p>
+            </div>
+          </div>
+
+          <div class="rank-item">
+            <span class="rank-number">4</span>
+            <div class="rank-content">
+              <h3>FourCastNet v2</h3>
+              <p>Très rapide, performances en amélioration vs. v1</p>
+            </div>
+          </div>
+
+          <div class="rank-item">
+            <span class="rank-number">5</span>
+            <div class="rank-content">
+              <h3>Pangu-Weather</h3>
+              <p>Erreurs de trajectoire plus importantes, mais meilleure intensité cyclonique</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box">
+          <strong>Note :</strong> IFS opérationnel (9 km) se situe au milieu du groupe. L'ensemble multi-modèles approche les performances de FengWu.
+        </div>
+      </div>
+    </section>
+
+    <section id="future" class="section">
+      <div class="container">
+        <h2>🔮 Perspectives 2025-2026</h2>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Résolution Accrue</h3>
+            <p>Progression vers modèles globaux 9 km, puis échelle kilométrique</p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>Prévision Étendue</h3>
+            <p>Maturation des modèles ML sous-saisonniers à saisonniers</p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>Assimilation IA</h3>
+            <p>Systèmes d'assimilation de données basés ML réduisant la dépendance aux systèmes physiques</p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>Modèles Régionaux</h3>
+            <p>Développement de modèles ML régionaux haute résolution avec données d'entraînement locales</p>
+          </div>
+
+          <div class="timeline-item">
+            <h3>Quantification d'Incertitude</h3>
+            <p>Meilleure caractérisation et communication de l'incertitude des prévisions ML</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="section">
+      <div class="container">
+        <h2>📚 Ressources et Références</h2>
+        
+        <div class="resource-category">
+          <h3>Dépôts GitHub Open Source</h3>
+          <ul class="resource-list">
+            <li><a href="https://github.com/ecmwf/anemoi" target="_blank">🔗 Anemoi Framework (ECMWF)</a></li>
+            <li><a href="https://github.com/google-deepmind/graphcast" target="_blank">🔗 GraphCast (DeepMind)</a></li>
+            <li><a href="https://github.com/198808xc/Pangu-Weather" target="_blank">🔗 Pangu-Weather (Huawei)</a></li>
+            <li><a href="https://github.com/OpenEarthLab/ai-models-fengwu" target="_blank">🔗 FengWu (Shanghai AI Lab)</a></li>
+            <li><a href="https://github.com/ecmwf-lab/ai-models-fourcastnetv2" target="_blank">🔗 FourCastNet v2 (NVIDIA)</a></li>
+            <li><a href="https://github.com/tpys/ai-models-fuxi" target="_blank">🔗 FuXi (communautaire)</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-category">
+          <h3>Publications Clés (2023-2025)</h3>
+          <ul class="resource-list">
+            <li>📄 Lang et al. (2024): "AIFS - ECMWF's data-driven forecasting system"</li>
+            <li>📄 Liu et al. (2024): "Evaluation of five global AI models for predicting weather in Eastern Asia and Western Pacific", <em>npj Climate and Atmospheric Science</em></li>
+            <li>📄 Lam et al. (2023): "Learning skillful medium-range global weather forecasting", <em>Science</em></li>
+            <li>📄 Chen et al. (2023): "FuXi: A cascade machine learning forecasting system", <em>npj Climate and Atmospheric Science</em></li>
+          </ul>
+        </div>
+
+        <div class="resource-category">
+          <h3>Documentation Officielle</h3>
+          <ul class="resource-list">
+            <li><a href="https://www.ecmwf.int/en/about/media-centre/aifs-blog" target="_blank">🔗 Blog AIFS (ECMWF)</a></li>
+            <li><a href="https://confluence.ecmwf.int/display/FCST/Implementation+of+AIFS+Single+v1" target="_blank">🔗 Documentation technique AIFS</a></li>
+            <li><a href="https://charts.ecmwf.int/" target="_blank">🔗 Cartes de prévision AIFS</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="recommendations" class="section">
+      <div class="container">
+        <h2>💡 Recommandations Pratiques</h2>
+        
+        <div class="recommendation-box">
+          <h3>🏛️ Pour Institutions de Recherche</h3>
+          <ul>
+            <li><strong>Ressources importantes :</strong> GraphCast, AIFS, ou FengWu pour performance de pointe</li>
+            <li><strong>Ressources limitées :</strong> KARINA offre excellent compromis efficacité/performance</li>
+            <li><strong>Prévision ensemble :</strong> Implémenter ensembles multi-modèles pour fiabilité accrue</li>
+          </ul>
+        </div>
+
+        <div class="recommendation-box">
+          <h3>🌐 Pour Applications Régionales</h3>
+          <ul>
+            <li>Utiliser modèles ML globaux pour conditions initiales et limites</li>
+            <li>Maintenir modèles régionaux physiques haute résolution pour détails locaux</li>
+            <li>Explorer approches hybrides à mesure qu'elles maturent</li>
+          </ul>
+        </div>
+
+        <div class="recommendation-box">
+          <h3>⚙️ Pour Centres Opérationnels</h3>
+          <ul>
+            <li>Déploiement opérationnel ECMWF démontre maturité ML pour prévision moyen terme</li>
+            <li>Exécuter modèles ML parallèlement aux systèmes physiques (forces complémentaires)</li>
+            <li>Exploiter efficacité computationnelle extrême pour taille d'ensemble élargie</li>
+            <li>Développer post-traitement pour adresser limitation de lissage</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Gwendal SALIOU - Tous droits réservés</p>
+      <p style="font-size: 0.9rem; margin-top: 10px;">
+        Revue SOTA mise à jour : Octobre 2025 | 
+        <a href="/" style="color: var(--secondary-color);">Retour à l'accueil</a>
+      </p>
+    </div>
+  </footer>
+
+  <style>
+    /* Styles spécifiques pour la page SOTA */
+    
+    .highlight-box {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+    }
+
+    .highlight-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .highlight-box ul {
+      margin: 15px 0 0 0;
+      padding-left: 20px;
+    }
+
+    .highlight-box li {
+      margin: 10px 0;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .model-card {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .model-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      border-color: var(--primary-color);
+    }
+
+    .model-card h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .model-card p {
+      font-size: 0.9rem;
+      margin: 8px 0;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .badge.operational {
+      background: #10b981;
+      color: white;
+    }
+
+    .badge.research {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-small {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-small:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .btn-small.disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .btn-small.disabled:hover {
+      transform: none;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      margin: 25px 0;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .comparison-table thead {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .comparison-table th {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .comparison-table tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    .comparison-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .innovation-card,
+    .challenge-card {
+      background: white;
+      border-left: 4px solid var(--primary-color);
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .innovation-card:hover,
+    .challenge-card:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transform: translateX(5px);
+    }
+
+    .innovation-card h3,
+    .challenge-card h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .challenge-card {
+      border-left-color: #ef4444;
+    }
+
+    .challenge-card h3 {
+      color: #ef4444;
+    }
+
+    .ranking-container {
+      margin: 30px 0;
+    }
+
+    .rank-item {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    .rank-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    .rank-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      background: var(--primary-color);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .rank-1 .rank-number {
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      color: #1a1a1a;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .rank-2 .rank-number {
+      background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+      color: #1a1a1a;
+    }
+
+    .rank-3 .rank-number {
+      background: linear-gradient(135deg, #cd7f32, #e8a87c);
+      color: white;
+    }
+
+    .rank-content h3 {
+      color: var(--primary-color);
+      margin: 0 0 8px 0;
+    }
+
+    .rank-content p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .note-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+      margin: 30px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 70px;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 21px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .timeline-item h3 {
+      color: var(--primary-color);
+      margin: 0 0 8px 0;
+      font-size: 1.1rem;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .resource-category {
+      margin: 30px 0;
+    }
+
+    .resource-category h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .resource-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .resource-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.3s ease;
+    }
+
+    .resource-list li:hover {
+      padding-left: 10px;
+      background: #f9fafb;
+    }
+
+    .resource-list li:last-child {
+      border-bottom: none;
+    }
+
+    .resource-list a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .resource-list a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    .recommendation-box {
+      background: white;
+      border: 2px solid var(--primary-color);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .recommendation-box h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .recommendation-box ul {
+      margin: 0;
+      padding-left: 25px;
+    }
+
+    .recommendation-box li {
+      margin: 12px 0;
+      line-height: 1.7;
+    }
+
+    .recommendation-box strong {
+      color: var(--primary-color);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .model-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .challenge-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rank-item {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .rank-number {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      .timeline::before {
+        left: 15px;
+      }
+
+      .timeline-item {
+        padding-left: 50px;
+      }
+
+      .timeline-item::before {
+        left: 6px;
+      }
+
+      .comparison-table {
+        font-size: 0.85rem;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 10px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .hero {
+        background: white;
+        color: black;
+      }
+
+      .model-card,
+      .rank-item,
+      .recommendation-box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .btn-small {
+        display: none;
+      }
+
+      header nav {
+        display: none;
+      }
+    }
+
+    /* Accessibility improvements */
+    .model-card:focus-within,
+    .innovation-card:focus-within,
+    .challenge-card:focus-within {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Loading animation for tables */
+    .comparison-table tbody tr {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script>
+    // Add smooth scrolling behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add intersection observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards and boxes
+    document.addEventListener('DOMContentLoaded', () => {
+      const animatedElements = document.querySelectorAll(
+        '.model-card, .innovation-card, .challenge-card, .rank-item, .timeline-item'
+      );
+      
+      animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+      });
+    });
+
+    // Add active state to navigation
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+      
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Add table sorting functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const table = document.querySelector('.comparison-table');
+      if (table) {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+          header.style.cursor = 'pointer';
+          header.addEventListener('click', () => {
+            sortTable(table, index);
+          });
+        });
+      }
+    });
+
+    function sortTable(table, column) {
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      
+      rows.sort((a, b) => {
+        const aText = a.cells[column].textContent.trim();
+        const bText = b.cells[column].textContent.trim();
+        return aText.localeCompare(bText);
+      });
+      
+      rows.forEach(row => tbody.appendChild(row));
+    }
+  </script>
+</body>
+</html>
