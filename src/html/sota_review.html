@@ -12,48 +12,263 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Enhanced meta tags -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="État de l'Art - ML pour la Prévision Météorologique" />
+  <meta property="og:description" content="Analyse complète des modèles d'apprentissage automatique pour la prévision météorologique avec ERA5 (2024-2025)" />
+  <meta property="og:url" content="https://gsaliou-ds.github.io/src/html/sota_review.html" />
+  
+  <!-- Structured data for better SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "État de l'Art - Modèles ML Météorologique",
+    "author": {
+      "@type": "Person",
+      "name": "Gwendal SALIOU"
+    },
+    "datePublished": "2025-10-08",
+    "description": "Analyse détaillée des modèles d'apprentissage automatique pour la prévision météorologique"
+  }
+  </script>
 </head>
 <body>
   <header>
     <div class="container">
+      <!-- Breadcrumb navigation -->
+      <div class="breadcrumb">
+        <a href="/">🏠 Accueil</a>
+        <span class="separator">›</span>
+        <span class="current">État de l'Art ML Météo</span>
+      </div>
+      
       <nav role="navigation" aria-label="Navigation principale">
-        <a href="/" aria-label="Retour à l'accueil">Accueil</a>
-        <a href="#overview" aria-label="Vue d'ensemble">Vue d'ensemble</a>
-        <a href="#models" aria-label="Modèles principaux">Modèles</a>
-        <a href="#innovations" aria-label="Innovations">Innovations</a>
-        <a href="#challenges" aria-label="Défis">Défis</a>
-        <a href="#resources" aria-label="Ressources">Ressources</a>
+        <a href="/" class="nav-home" aria-label="Retour à l'accueil">
+          <span class="nav-icon">🏠</span>
+          Accueil
+        </a>
+        <a href="#overview" aria-label="Vue d'ensemble">
+          <span class="nav-icon">🌍</span>
+          Vue d'ensemble
+        </a>
+        <a href="#models" aria-label="Modèles principaux">
+          <span class="nav-icon">🤖</span>
+          Modèles
+        </a>
+        <a href="#comparison" aria-label="Comparaison">
+          <span class="nav-icon">📊</span>
+          Comparaison
+        </a>
+        <a href="#innovations" aria-label="Innovations">
+          <span class="nav-icon">🚀</span>
+          Innovations
+        </a>
+        <a href="#challenges" aria-label="Défis">
+          <span class="nav-icon">⚠️</span>
+          Défis
+        </a>
+        <a href="#resources" aria-label="Ressources">
+          <span class="nav-icon">📚</span>
+          Ressources
+        </a>
       </nav>
+      
+      <!-- Table of contents toggle for mobile -->
+      <button class="toc-toggle" aria-label="Afficher/masquer le sommaire">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
     </div>
   </header>
+
+  <!-- Floating table of contents -->
+  <div class="floating-toc">
+    <div class="toc-header">
+      <h4>📑 Sommaire</h4>
+      <button class="toc-close" aria-label="Fermer le sommaire">×</button>
+    </div>
+    <nav class="toc-nav">
+      <a href="#overview">🌍 Vue d'ensemble</a>
+      <a href="#models">🤖 Modèles principaux</a>
+      <a href="#comparison">📊 Comparaison</a>
+      <a href="#performance">📈 Performance</a>
+      <a href="#innovations">🚀 Innovations</a>
+      <a href="#challenges">⚠️ Défis</a>
+      <a href="#future">🔮 Perspectives</a>
+      <a href="#resources">📚 Ressources</a>
+      <a href="#recommendations">💡 Recommandations</a>
+    </nav>
+    <div class="reading-progress">
+      <div class="progress-bar"></div>
+      <span class="progress-text">0% lu</span>
+    </div>
+  </div>
 
   <main>
     <section class="hero" role="banner">
       <div class="container">
-        <h1>État de l'Art</h1>
-        <p>Modèles déterministes d'apprentissage automatique<br>pour la prévision météorologique avec ERA5</p>
-        <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.9;">Mis à jour : Octobre 2025</p>
+        <div class="hero-badge">
+          <span class="badge-icon">🧠</span>
+          <span>Intelligence Artificielle Météorologique</span>
+        </div>
+        <h1>État de l'Art des Modèles ML</h1>
+        <p class="hero-subtitle">Révolution de la prévision météorologique par l'apprentissage automatique</p>
+        <p class="hero-description">
+          Analyse complète des modèles déterministes basés sur ERA5<br>
+          <strong>De la recherche au déploiement opérationnel</strong>
+        </p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">8+</span>
+            <span class="stat-label">Modèles analysés</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">1000×</span>
+            <span class="stat-label">Plus efficace</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2025</span>
+            <span class="stat-label">Année de transition</span>
+          </div>
+        </div>
+        
+        <div class="hero-meta">
+          <span class="update-badge">
+            <span class="update-icon">🕒</span>
+            Dernière mise à jour : Octobre 2025
+          </span>
+          <span class="read-time">
+            <span class="read-icon">📖</span>
+            ~15 min de lecture
+          </span>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#overview" class="cta-button primary">
+            <span>🚀</span>
+            Commencer la lecture
+          </a>
+          <a href="#models" class="cta-button secondary">
+            <span>🤖</span>
+            Voir les modèles
+          </a>
+        </div>
+      </div>
+      
+      <!-- Animated background elements -->
+      <div class="hero-bg-elements">
+        <div class="bg-element element-1"></div>
+        <div class="bg-element element-2"></div>
+        <div class="bg-element element-3"></div>
       </div>
     </section>
 
     <section id="overview" class="section">
       <div class="container">
-        <h2>🌍 Vue d'Ensemble</h2>
-        <p>
-          La période 2024-2025 marque une <strong>transition historique</strong> de la prévision météorologique par apprentissage automatique, passant de la recherche expérimentale au <strong>déploiement opérationnel</strong>.
-        </p>
-        <p>
-          Le <strong>25 février 2025</strong>, le Centre Européen de Prévisions Météorologiques à Moyen Terme (ECMWF) a mis en service opérationnel son système <em>AIFS (Artificial Intelligence Forecasting System)</em>, marquant ainsi le premier engagement institutionnel majeur d'un centre météorologique dans la prévision IA. La version ensemble <em>AIFS ENS</em> a suivi le <strong>1er juillet 2025</strong>.
-        </p>
+        <div class="section-header">
+          <span class="section-icon">🌍</span>
+          <h2>Vue d'Ensemble</h2>
+          <p class="section-subtitle">De la recherche à la révolution opérationnelle</p>
+        </div>
         
-        <div class="highlight-box">
-          <h3>🎯 Points clés</h3>
-          <ul>
-            <li><strong>Efficacité computationnelle</strong> : Réduction ~1000× de la consommation énergétique</li>
-            <li><strong>Vitesse</strong> : Prévisions 10 jours en 1-2 minutes</li>
-            <li><strong>Performance</strong> : Gains jusqu'à 20% sur certaines métriques (trajectoires cycloniques)</li>
-            <li><strong>Maturité opérationnelle</strong> : Support 24/7 pour les services météo nationaux</li>
-          </ul>
+        <!-- Timeline section -->
+        <div class="overview-timeline">
+          <div class="timeline-milestone active">
+            <div class="milestone-date">2023</div>
+            <div class="milestone-content">
+              <h4>Émergence</h4>
+              <p>Premiers modèles ML compétitifs (GraphCast, Pangu-Weather)</p>
+            </div>
+          </div>
+          
+          <div class="timeline-milestone active">
+            <div class="milestone-date">2024</div>
+            <div class="milestone-content">
+              <h4>Maturation</h4>
+              <p>Multiplication des architectures (FengWu, FuXi, Aurora)</p>
+            </div>
+          </div>
+          
+          <div class="timeline-milestone current">
+            <div class="milestone-date">2025</div>
+            <div class="milestone-content">
+              <h4>Déploiement</h4>
+              <p><strong>ECMWF lance AIFS</strong> - Premier système IA opérationnel</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-content">
+          <div class="content-grid">
+            <div class="content-card primary">
+              <div class="card-header">
+                <span class="card-icon">🏛️</span>
+                <h3>Tournant Historique</h3>
+              </div>
+              <p>
+                <strong>25 février 2025</strong> : L'ECMWF lance <strong>AIFS</strong>, premier système de prévision IA entièrement opérationnel. Cette étape marque la transition de la recherche expérimentale vers l'adoption institutionnelle.
+              </p>
+              <div class="card-highlight">
+                Version ensemble (AIFS ENS) déployée le <strong>1er juillet 2025</strong>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header">
+                <span class="card-icon">⚡</span>
+                <h3>Avantages Révolutionnaires</h3>
+              </div>
+              <div class="advantages-list">
+                <div class="advantage-item">
+                  <span class="advantage-metric">1000×</span>
+                  <span class="advantage-desc">Réduction énergétique</span>
+                </div>
+                <div class="advantage-item">
+                  <span class="advantage-metric">1-2 min</span>
+                  <span class="advantage-desc">Prévisions 10 jours</span>
+                </div>
+                <div class="advantage-item">
+                  <span class="advantage-metric">+20%</span>
+                  <span class="advantage-desc">Précision cyclones</span>
+                </div>
+                <div class="advantage-item">
+                  <span class="advantage-metric">24/7</span>
+                  <span class="advantage-desc">Support opérationnel</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact metrics -->
+        <div class="impact-section">
+          <h3>📊 Impact Mesuré</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon">💰</div>
+              <div class="metric-value">Millions €</div>
+              <div class="metric-label">Économies énergétiques annuelles</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">🌍</div>
+              <div class="metric-value">193</div>
+              <div class="metric-label">Pays utilisateurs potentiels</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">🔬</div>
+              <div class="metric-value">8+</div>
+              <div class="metric-label">Modèles ML de recherche</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">📈</div>
+              <div class="metric-value">90%</div>
+              <div class="metric-label">Variables mieux prédites</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -467,7 +682,590 @@
   </footer>
 
   <style>
-    /* Styles spécifiques pour la page SOTA */
+    /* Enhanced styles for SOTA review page */
+    
+    /* Breadcrumb navigation */
+    .breadcrumb {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .breadcrumb a {
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+
+    .breadcrumb .separator {
+      margin: 0 8px;
+      color: var(--text-light);
+    }
+
+    .breadcrumb .current {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    /* Enhanced navigation */
+    .nav-icon {
+      margin-right: 6px;
+      font-size: 0.9rem;
+    }
+
+    .nav-home {
+      background: var(--secondary-color) !important;
+      color: white !important;
+      border-radius: 20px;
+    }
+
+    .nav-home:hover {
+      background: var(--primary-color) !important;
+    }
+
+    /* Mobile navigation toggle */
+    .toc-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hamburger {
+      width: 25px;
+      height: 3px;
+      background: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    /* Floating table of contents */
+    .floating-toc {
+      position: fixed;
+      top: 100px;
+      right: -350px;
+      width: 300px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: var(--shadow-medium);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .floating-toc.open {
+      right: 20px;
+    }
+
+    .toc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-section);
+      border-radius: 15px 15px 0 0;
+    }
+
+    .toc-header h4 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--primary-color);
+    }
+
+    .toc-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .toc-close:hover {
+      background: var(--secondary-color);
+      color: white;
+    }
+
+    .toc-nav {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc-nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .toc-nav a:hover, .toc-nav a.active {
+      background: var(--secondary-color);
+      color: white;
+    }
+
+    .reading-progress {
+      padding: 15px 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      width: var(--progress, 0%);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: block;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    /* Enhanced hero section */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .badge-icon {
+      font-size: 1.1rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
+      margin-bottom: 15px !important;
+      opacity: 0.95;
+      font-weight: 500;
+    }
+
+    .hero-description {
+      font-size: clamp(1rem, 2.2vw, 1.1rem) !important;
+      margin-bottom: 30px !important;
+      opacity: 0.9;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 25px 0;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .update-badge, .read-time {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .cta-button.primary {
+      background: white;
+      color: var(--primary-color);
+      box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+    }
+
+    .cta-button.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255,255,255,0.4);
+    }
+
+    .cta-button.secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-button.secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Animated background elements */
+    .hero-bg-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-element {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .element-1 {
+      width: 100px;
+      height: 100px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .element-2 {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .element-3 {
+      width: 80px;
+      height: 80px;
+      top: 30%;
+      right: 30%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+      }
+    }
+
+    /* Enhanced section headers */
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* Timeline for overview */
+    .overview-timeline {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .overview-timeline::before {
+      content: '';
+      position: absolute;
+      top: 50px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      z-index: 1;
+    }
+
+    .timeline-milestone {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .milestone-date {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      border: 4px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin: 0 auto 15px;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-milestone.active .milestone-date {
+      border-color: var(--secondary-color);
+      color: var(--secondary-color);
+      background: rgba(52, 152, 219, 0.1);
+    }
+
+    .timeline-milestone.current .milestone-date {
+      border-color: var(--accent-color);
+      color: white;
+      background: var(--accent-color);
+      box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(231, 76, 60, 0.6);
+      }
+    }
+
+    .milestone-content h4 {
+      margin: 0 0 8px 0;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+    }
+
+    .milestone-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      max-width: 150px;
+    }
+
+    /* Content grid for overview */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: var(--shadow-light);
+      border: 2px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .content-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--secondary-color);
+    }
+
+    .content-card.primary {
+      border-color: var(--secondary-color);
+      background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.02));
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+    }
+
+    .card-header h3 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+
+    .card-highlight {
+      background: var(--secondary-color);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    .advantages-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .advantage-item {
+      text-align: center;
+      padding: 15px 10px;
+      background: var(--bg-section);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .advantage-item:hover {
+      border-color: var(--secondary-color);
+      transform: scale(1.05);
+    }
+
+    .advantage-metric {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 5px;
+    }
+
+    .advantage-desc {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Impact metrics */
+    .impact-section {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .impact-section h3 {
+      margin-bottom: 30px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .metric-card {
+      background: white;
+      padding: 25px 20px;
+      border-radius: 15px;
+      box-shadow: var(--shadow-light);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--secondary-color);
+    }
+
+    .metric-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
     
     .highlight-box {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -842,19 +1640,121 @@
       color: var(--primary-color);
     }
 
-    /* Responsive adjustments */
+    /* Enhanced responsive design */
+    @media (max-width: 1024px) {
+      .floating-toc {
+        width: 280px;
+        right: -320px;
+      }
+      
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .advantages-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
+      /* Navigation adjustments */
+      nav {
+        display: none;
+      }
+      
+      .toc-toggle {
+        display: flex;
+      }
+      
+      .floating-toc {
+        width: 100vw;
+        right: -100vw;
+        top: 0;
+        height: 100vh;
+        border-radius: 0;
+      }
+      
+      .floating-toc.open {
+        right: 0;
+      }
+      
+      /* Hero section mobile */
+      .hero-stats {
+        gap: 20px;
+      }
+      
+      .stat-item {
+        min-width: 120px;
+      }
+      
+      .hero-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-button {
+        width: 80%;
+        max-width: 250px;
+        justify-content: center;
+      }
+      
+      /* Timeline mobile */
+      .overview-timeline {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+      
+      .overview-timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        top: 0;
+        bottom: 0;
+        height: auto;
+        background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+      }
+      
+      /* Content adjustments */
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .content-card {
+        padding: 20px;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      
+      .metric-card {
+        padding: 20px 15px;
+      }
+      
+      /* Models grid */
       .model-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
       }
 
       .challenge-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
       }
 
       .rank-item {
         flex-direction: column;
         text-align: center;
+        padding: 20px 15px;
       }
 
       .rank-number {
@@ -875,12 +1775,44 @@
       }
 
       .comparison-table {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
       }
 
       .comparison-table th,
       .comparison-table td {
-        padding: 10px;
+        padding: 8px 6px;
+      }
+      
+      /* Section headers mobile */
+      .section-icon {
+        font-size: 2.5rem;
+      }
+      
+      .section-subtitle {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .breadcrumb {
+        font-size: 0.8rem;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .hero {
+        padding: 80px 15px 60px;
       }
     }
 
@@ -938,17 +1870,104 @@
   </style>
 
   <script>
-    // Add smooth scrolling behavior
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+    // Enhanced interactive features
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scrolling behavior
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            
+            // Close floating TOC if open
+            const floatingToc = document.querySelector('.floating-toc');
+            if (floatingToc) {
+              floatingToc.classList.remove('open');
+            }
+          }
+        });
+      });
+
+      // Floating TOC functionality
+      const tocToggle = document.querySelector('.toc-toggle');
+      const tocClose = document.querySelector('.toc-close');
+      const floatingToc = document.querySelector('.floating-toc');
+      
+      if (tocToggle) {
+        tocToggle.addEventListener('click', () => {
+          floatingToc.classList.toggle('open');
+        });
+      }
+      
+      if (tocClose) {
+        tocClose.addEventListener('click', () => {
+          floatingToc.classList.remove('open');
+        });
+      }
+
+      // Reading progress tracking
+      const progressBar = document.querySelector('.progress-bar');
+      const progressText = document.querySelector('.progress-text');
+      
+      function updateReadingProgress() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        
+        if (progressBar) {
+          progressBar.style.setProperty('--progress', `${scrolled}%`);
         }
+        if (progressText) {
+          progressText.textContent = `${Math.round(scrolled)}% lu`;
+        }
+      }
+      
+      window.addEventListener('scroll', updateReadingProgress);
+      updateReadingProgress(); // Initial call
+
+      // Active TOC section highlighting
+      function updateActiveTocSection() {
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc-nav a[href^="#"]');
+        
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      window.addEventListener('scroll', updateActiveTocSection);
+      updateActiveTocSection(); // Initial call
+
+      // Show/hide floating TOC based on scroll position
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const heroHeight = document.querySelector('.hero')?.offsetHeight || 500;
+        
+        if (scrollTop > heroHeight) {
+          floatingToc.style.display = 'block';
+        } else {
+          floatingToc.style.display = 'none';
+          floatingToc.classList.remove('open');
+        }
+        
+        lastScrollTop = scrollTop;
       });
     });
 
