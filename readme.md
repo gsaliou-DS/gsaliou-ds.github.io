@@ -1,6 +1,6 @@
 ## 📘 Gwendal SALIOU – AI, Data Science & Weather Modeling
 
-This is the source code based on [Guillaume LEMONNIER](https://p-pix.github.io) for my personal academic webpage, hosted with **GitHub Pages**, where I present my **PhD research**, **technical skills**, **CV**, and a **blog** on AI for atmospheric modeling and hybrid forecasting systems.
+This is the source code based on [Guillaume LEMONNIER](https://p-pix.github.io) for my personal academic webpage, hosted with **GitHub Pages**, where I present my **PhD research**, **technical skills**, **CV**, and a **blog** on AI for atmospheric modeling and regional forecasting systems (also called LAM).
 
 🔗 View the live site: [https://gsaliou-ds.github.io](https://gsaliou-ds.github.io)
 
