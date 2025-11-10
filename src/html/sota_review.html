@@ -1,866 +1,422 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="État de l'art - Modèles ML pour la prévision météorologique" />
-  <meta name="keywords" content="Machine Learning, Weather Forecasting, ERA5, AIFS, GraphCast, AI Models" />
-  <meta name="author" content="Gwendal SALIOU" />
-  
-  <title>SOTA - Modèles ML Météo | Gwendal SALIOU</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/sota-review.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Enhanced meta tags -->
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="État de l'Art - ML pour la Prévision Météorologique" />
-  <meta property="og:description" content="Analyse complète des modèles d'apprentissage automatique pour la prévision météorologique avec ERA5 (2024-2025)" />
-  <meta property="og:url" content="https://gsaliou-ds.github.io/src/html/sota_review.html" />
-  
-  <!-- Structured data for better SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "État de l'Art - Modèles ML Météorologique",
-    "author": {
-      "@type": "Person",
-      "name": "Gwendal SALIOU"
-    },
-    "datePublished": "2025-10-08",
-    "description": "Analyse détaillée des modèles d'apprentissage automatique pour la prévision météorologique"
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downscaling Régional avec Machine Learning</title>
+    
+    <!-- Lien vers les styles -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sota-review.css">
+
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
+
 <body>
-  <header>
+
+<header class="hero">
     <div class="container">
-      <!-- Breadcrumb navigation -->
-      <div class="breadcrumb">
-        <a href="../../index.html">🏠 Accueil</a>
-        <span class="separator">›</span>
-        <span class="current">État de l'Art ML Météo</span>
-      </div>
-      
-      <nav role="navigation" aria-label="Navigation principale">
-        <a href="../../index.html" class="nav-home" aria-label="Retour à l'accueil">
-          <span class="nav-icon">🏠</span>
-          Accueil
-        </a>
-        <a href="#overview" aria-label="Vue d'ensemble">
-          <span class="nav-icon">🌍</span>
-          Vue d'ensemble
-        </a>
-        <a href="#models" aria-label="Modèles principaux">
-          <span class="nav-icon">🤖</span>
-          Modèles
-        </a>
-        <a href="#comparison" aria-label="Comparaison">
-          <span class="nav-icon">📊</span>
-          Comparaison
-        </a>
-        <a href="#innovations" aria-label="Innovations">
-          <span class="nav-icon">🚀</span>
-          Innovations
-        </a>
-        <a href="#challenges" aria-label="Défis">
-          <span class="nav-icon">⚠️</span>
-          Défis
-        </a>
-        <a href="#resources" aria-label="Ressources">
-          <span class="nav-icon">📚</span>
-          Ressources
-        </a>
-      </nav>
-      
-      <!-- Table of contents toggle for mobile -->
-      <button class="toc-toggle" aria-label="Afficher/masquer le sommaire">
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Floating table of contents -->
-  <div class="floating-toc">
-    <div class="toc-header">
-      <h4>📑 Sommaire</h4>
-      <button class="toc-close" aria-label="Fermer le sommaire">×</button>
-    </div>
-    <nav class="toc-nav">
-      <a href="#overview">🌍 Vue d'ensemble</a>
-      <a href="#models">🤖 Modèles principaux</a>
-      <a href="#comparison">📊 Comparaison</a>
-      <a href="#performance">📈 Performance</a>
-      <a href="#innovations">🚀 Innovations</a>
-      <a href="#challenges">⚠️ Défis</a>
-      <a href="#future">🔮 Perspectives</a>
-      <a href="#resources">📚 Ressources</a>
-      <a href="#recommendations">💡 Recommandations</a>
-    </nav>
-    <div class="reading-progress">
-      <div class="progress-bar"></div>
-      <span class="progress-text">0% lu</span>
-    </div>
-  </div>
-
-  <main>
-    <section class="hero" role="banner">
-      <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html" class="nav-home"><span class="nav-icon">🏠</span>Accueil</a>
+            <span class="separator">›</span>
+            <span class="current">Revue de l'État de l'Art</span>
+        </div>
         <div class="hero-badge">
-          <span class="badge-icon">🧠</span>
-          <span>Intelligence Artificielle Météorologique</span>
+            <span class="badge-icon">🧠</span>
+            <span>Intelligence Artificielle pour la Météorologie</span>
         </div>
-        <h1>État de l'Art des Modèles ML</h1>
-        <p class="hero-subtitle">Révolution de la prévision météorologique par l'apprentissage automatique</p>
-        <p class="hero-description">
-          Analyse complète des modèles déterministes basés sur ERA5<br>
-          <strong>De la recherche au déploiement opérationnel</strong>
-        </p>
-        
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">8+</span>
-            <span class="stat-label">Modèles analysés</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">1000×</span>
-            <span class="stat-label">Plus efficace</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">2025</span>
-            <span class="stat-label">Année de transition</span>
-          </div>
-        </div>
-        
-        <div class="hero-meta">
-          <span class="update-badge">
-            <span class="update-icon">🕒</span>
-            Dernière mise à jour : Octobre 2025
-          </span>
-          <span class="read-time">
-            <span class="read-icon">📖</span>
-            ~15 min de lecture
-          </span>
-        </div>
+        <h1>🌏 Downscaling ML sur le Japon<br>2.5° → 0.25° Expérience de Prévision Régionale</h1>
+        <p class="hero-subtitle">Comprendre quand l'information locale haute résolution est importante</p>
+    </div>
+</header>
 
-        <div class="hero-cta">
-          <a href="#overview" class="cta-button primary">
-            <span>🚀</span>
-            Commencer la lecture
-          </a>
-          <a href="#models" class="cta-button secondary">
-            <span>🤖</span>
-            Voir les modèles
-          </a>
-        </div>
-      </div>
-      
-      <!-- Animated background elements -->
-      <div class="hero-bg-elements">
-        <div class="bg-element element-1"></div>
-        <div class="bg-element element-2"></div>
-        <div class="bg-element element-3"></div>
-      </div>
-    </section>
+<!-- ========================================================= -->
+<!-- SECTION 1 — RÉSUMÉ DU PROJET -->
+<!-- ========================================================= -->
 
-    <section id="overview" class="section">
-      <div class="container">
+<section class="section">
+    <div class="container">
         <div class="section-header">
-          <span class="section-icon">🌍</span>
-          <h2>Vue d'Ensemble</h2>
-          <p class="section-subtitle">De la recherche à la révolution opérationnelle</p>
+            <span class="section-icon">🔍</span>
+            <h2>Résumé</h2>
+            <p class="section-subtitle">Vue d'ensemble du projet de recherche</p>
         </div>
-        
-        <!-- Timeline section -->
-        <div class="overview-timeline">
-          <div class="timeline-milestone active">
-            <div class="milestone-date">2023</div>
-            <div class="milestone-content">
-              <h4>Émergence</h4>
-              <p>Premiers modèles ML compétitifs (GraphCast, Pangu-Weather)</p>
-            </div>
-          </div>
-          
-          <div class="timeline-milestone active">
-            <div class="milestone-date">2024</div>
-            <div class="milestone-content">
-              <h4>Maturation</h4>
-              <p>Multiplication des architectures (FengWu, FuXi, Aurora)</p>
-            </div>
-          </div>
-          
-          <div class="timeline-milestone current">
-            <div class="milestone-date">2025</div>
-            <div class="milestone-content">
-              <h4>Déploiement</h4>
-              <p><strong>ECMWF lance AIFS</strong> - Premier système IA opérationnel</p>
-            </div>
-          </div>
+        <p>
+            Ce projet étudie combien de temps l'information atmosphérique locale à haute résolution reste utile
+            lors du downscaling de prévisions à faible résolution en utilisant l'apprentissage automatique.
+            En utilisant les réanalyses horaires ERA5, nous effectuons un downscaling de 2.5° à 0.25° sur le Japon 
+            à l'aide d'un CNN déterministe. Quatre configurations contrôlées isolent le rôle de la persistance, 
+            de l'évolution locale uniquement, des champs globaux et du forçage intérieur hybride.
+            Nous définissons une <b>échelle de temps de dilution</b> $L^*$ mesurant quand l'information locale 
+            devient non informative. Ce document présente la conception expérimentale complète, la formulation 
+            mathématique, la configuration du modèle, les métriques d'évaluation et le calendrier pour l'article scientifique.
+        </p>
+    </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION 2 — DOMAINE ET FORMULATION MATHÉMATIQUE -->
+<!-- ========================================================= -->
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📐</span>
+            <h2>1. Définition du Domaine & Formulation Mathématique</h2>
         </div>
 
-        <div class="overview-content">
-          <div class="content-grid">
-            <div class="content-card primary">
-              <div class="card-header">
-                <span class="card-icon">🏛️</span>
-                <h3>Tournant Historique</h3>
-              </div>
-              <p>
-                <strong>25 février 2025</strong> : L'ECMWF lance <strong>AIFS</strong>, premier système de prévision IA entièrement opérationnel. Cette étape marque la transition de la recherche expérimentale vers l'adoption institutionnelle.
-              </p>
-              <div class="card-highlight">
-                Version ensemble (AIFS ENS) déployée le <strong>1er juillet 2025</strong>
-              </div>
+        <h3>1.1 Domaine Spatial</h3>
+        <div class="content-card">
+            <p>
+                Le domaine de calcul est la région du Japon :
+                $$ \Omega \subset \mathbb{R}^2, \quad \text{lat: } 25\!-\!50^\circ N,\ \text{lon: } 125\!-\!150^\circ E. $$
+            </p>
+        </div>
+
+        <h3>1.2 Structure Temporelle</h3>
+        <div class="equation-block">
+            \[
+                T = \{t_0, t_0+\Delta t, t_0+2\Delta t, ...\}, \quad \Delta t = 1\text{ heure}
+            \]
+        </div>
+
+        <h3>1.3 Espaces de Résolution</h3>
+        <div class="content-card">
+            <ul>
+                <li>$V_H$ : Grille haute résolution 0.25° (65×81×121)</li>
+                <li>$V_L$ : Grille basse résolution 2.5° (65×73×141)</li>
+                <li>Projections :
+                    $$ \Pi_{L\to H}: V_L \to V_H, \qquad \Pi_{H\to L}: V_H \to V_L $$
+                </li>
+            </ul>
+        </div>
+
+        <h3>1.4 Variables d'État</h3>
+        <div class="equation-block">
+            \[
+                \mathbf{y}_H(t) \in V_H,\qquad \mathbf{y}_L(t) \in V_L
+            \]
+        </div>
+
+        <h3>1.5 Opérateur de Downscaling ML</h3>
+        <div class="equation-block">
+            \[
+                \hat{\mathbf{y}}_H(t+\Delta t)
+                = \mathcal{F}_\theta\big(
+                    \mathbf{y}_H(t),\ \Pi_{L\to H}[\mathbf{y}_L(t+\Delta t)]
+                \big)
+            \]
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION 3 — CADRE EXPÉRIMENTAL -->
+<!-- ========================================================= -->
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">🧪</span>
+            <h2>2. Configuration Expérimentale</h2>
+        </div>
+
+        <h3>2.1 Variables</h3>
+        <div class="content-card">
+            <p><b>Surface :</b> TCWV, MSL, SP, T2M, SKT</p>
+            <p><b>Verticales (60 champs) :</b> z, t, q, u, v sur 12 niveaux de pression</p>
+        </div>
+
+        <h3>2.2 Jeu de Données ERA5</h3>
+        <div class="content-card">
+            <ul>
+                <li><b>Entraînement :</b> 1980–2015</li>
+                <li><b>Validation :</b> 2016–2018</li>
+                <li><b>Test :</b> 2019–2021</li>
+            </ul>
+        </div>
+
+        <h3>2.3 Modèle</h3>
+        <div class="content-card">
+            <p>Votre implémentation CNN existante (ConvNet + connexions de style KARINA) avec perte MAE.</p>
+        </div>
+
+        <h3>2.4 Quatre Configurations de Prévision</h3>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">1️⃣</span>
+                    <h3>Persistance</h3>
+                </div>
+                <div class="equation-block">
+                    $$ \hat{\mathbf{y}}^{P}(t+\Delta t) = \mathbf{y}_H(t) $$
+                </div>
             </div>
 
             <div class="content-card">
-              <div class="card-header">
-                <span class="card-icon">⚡</span>
-                <h3>Avantages Révolutionnaires</h3>
-              </div>
-              <div class="advantages-list">
-                <div class="advantage-item">
-                  <span class="advantage-metric">1000×</span>
-                  <span class="advantage-desc">Réduction énergétique</span>
+                <div class="card-header">
+                    <span class="card-icon">2️⃣</span>
+                    <h3>Évolution locale uniquement</h3>
                 </div>
-                <div class="advantage-item">
-                  <span class="advantage-metric">1-2 min</span>
-                  <span class="advantage-desc">Prévisions 10 jours</span>
+                <div class="equation-block">
+                    $$ \hat{\mathbf{y}}^{L}(t+\Delta t) = \mathcal{F}_\theta(\mathbf{y}_H(t)) $$
                 </div>
-                <div class="advantage-item">
-                  <span class="advantage-metric">+20%</span>
-                  <span class="advantage-desc">Précision cyclones</span>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">3️⃣</span>
+                    <h3>Évolution globale uniquement</h3>
                 </div>
-                <div class="advantage-item">
-                  <span class="advantage-metric">24/7</span>
-                  <span class="advantage-desc">Support opérationnel</span>
+                <div class="equation-block">
+                    $$ \hat{\mathbf{y}}^{G}(t+\Delta t) = \mathcal{F}_\theta(\Pi_{L\to H}[\mathbf{y}_L(t+\Delta t)]) $$
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Impact metrics -->
-        <div class="impact-section">
-          <h3>📊 Impact Mesuré</h3>
-          <div class="metrics-grid">
-            <div class="metric-card">
-              <div class="metric-icon">💰</div>
-              <div class="metric-value">Millions €</div>
-              <div class="metric-label">Économies énergétiques annuelles</div>
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">4️⃣</span>
+                    <h3>Forçage intérieur (local + global)</h3>
+                </div>
+                <div class="equation-block">
+                    $$ \hat{\mathbf{y}}^{IF}(t+\Delta t) = \mathcal{F}_\theta(\mathbf{y}_H(t), \mathbf{y}_L(t+\Delta t)) $$
+                </div>
             </div>
-            <div class="metric-card">
-              <div class="metric-icon">🌍</div>
-              <div class="metric-value">193</div>
-              <div class="metric-label">Pays utilisateurs potentiels</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon">🔬</div>
-              <div class="metric-value">8+</div>
-              <div class="metric-label">Modèles ML de recherche</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-icon">📈</div>
-              <div class="metric-value">90%</div>
-              <div class="metric-label">Variables mieux prédites</div>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <section id="models" class="section">
-      <div class="container">
-        <h2>🤖 Modèles Principaux</h2>
-        
-        <div class="model-grid">
-          <div class="model-card">
-            <h3>AIFS (ECMWF)</h3>
-            <span class="badge operational">Opérationnel</span>
-            <p><strong>Architecture :</strong> Graph Neural Networks</p>
-            <p><strong>Résolution :</strong> 28 km (déterministe), 31 km (ensemble)</p>
-            <p><strong>Innovation :</strong> Premier système IA entièrement opérationnel, 51 membres d'ensemble</p>
-            <p><strong>Performance :</strong> +20% sur trajectoires cycloniques vs. modèles physiques</p>
-            <a href="https://www.ecmwf.int/en/about/media-centre/aifs-blog" target="_blank" class="btn-small">Documentation</a>
-          </div>
-
-          <div class="model-card">
-            <h3>FengWu (Shanghai AI Lab)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> Multi-modal Transformer</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Replay buffer, traitement multi-modal des variables</p>
-            <p><strong>Performance :</strong> Meilleur modèle pour Asie de l'Est et Pacifique Ouest</p>
-            <a href="https://github.com/OpenEarthLab/ai-models-fengwu" target="_blank" class="btn-small">Code</a>
-          </div>
-
-          <div class="model-card">
-            <h3>GraphCast (DeepMind)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> GNN multi-mesh</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Maillage icosaédrique à 6 couches, fine-tuning autorégressif</p>
-            <p><strong>Performance :</strong> 90% des variables meilleures que IFS-HRES</p>
-            <a href="https://github.com/google-deepmind/graphcast" target="_blank" class="btn-small">Code</a>
-          </div>
-
-          <div class="model-card">
-            <h3>FuXi (Fudan University)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> Swin Transformer v2 cascadé</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Architecture cascadée (court/moyen/long terme)</p>
-            <p><strong>Performance :</strong> 2e meilleur pour région Pacifique, extension sous-saisonnière</p>
-            <a href="https://github.com/tpys/ai-models-fuxi" target="_blank" class="btn-small">Code</a>
-          </div>
-
-          <div class="model-card">
-            <h3>Pangu-Weather (Huawei)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> 3D Earth-Specific ViT</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Pas de temps flexibles (1, 3, 6, 24h)</p>
-            <p><strong>Performance :</strong> Meilleure prévision d'intensité des cyclones tropicaux</p>
-            <a href="https://github.com/198808xc/Pangu-Weather" target="_blank" class="btn-small">Code</a>
-          </div>
-
-          <div class="model-card">
-            <h3>FourCastNet v2 (NVIDIA)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> ViT + SFNO</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Opérateurs harmoniques sphériques pour stabilité</p>
-            <p><strong>Performance :</strong> ~7 itérations/seconde, ultra-rapide</p>
-            <a href="https://github.com/ecmwf-lab/ai-models-fourcastnetv2" target="_blank" class="btn-small">Code</a>
-          </div>
-
-          <div class="model-card">
-            <h3>Aurora (Microsoft)</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> Foundation Model</p>
-            <p><strong>Résolution :</strong> 0.25°</p>
-            <p><strong>Innovation :</strong> Pré-entraînement multi-dataset, approche modèle de fondation</p>
-            <p><strong>Performance :</strong> Prévision 10 jours + pollution de l'air</p>
-            <span class="btn-small disabled">Code partiel</span>
-          </div>
-
-          <div class="model-card">
-            <h3>KARINA</h3>
-            <span class="badge research">Recherche</span>
-            <p><strong>Architecture :</strong> ConvNeXt + SENet</p>
-            <p><strong>Résolution :</strong> 2.5°</p>
-            <p><strong>Innovation :</strong> Padding géocyclique, efficacité extrême</p>
-            <p><strong>Performance :</strong> 48h entraînement sur 4×A100, excellent pour downscaling</p>
-            <a href="#" class="btn-small">Code</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="comparison" class="section">
-      <div class="container">
-        <h2>📊 Tableau Comparatif</h2>
-        <div class="table-responsive">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>Modèle</th>
-                <th>Organisation</th>
-                <th>Résolution</th>
-                <th>Architecture</th>
-                <th>Temps d'entraînement</th>
-                <th>Statut</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>AIFS</strong></td>
-                <td>ECMWF</td>
-                <td>28 km</td>
-                <td>Graph NN</td>
-                <td>~400h (A100)</td>
-                <td><span class="badge operational">Opérationnel</span></td>
-              </tr>
-              <tr>
-                <td><strong>FengWu</strong></td>
-                <td>Shanghai AI Lab</td>
-                <td>0.25°</td>
-                <td>Multi-modal Transformer</td>
-                <td>~300h (A100)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-              <tr>
-                <td><strong>GraphCast</strong></td>
-                <td>DeepMind</td>
-                <td>0.25°</td>
-                <td>GNN</td>
-                <td>21,504h (TPU v4)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-              <tr>
-                <td><strong>FuXi</strong></td>
-                <td>Fudan University</td>
-                <td>0.25°</td>
-                <td>Swin Transformer v2</td>
-                <td>240h (A100)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-              <tr>
-                <td><strong>Pangu-Weather</strong></td>
-                <td>Huawei</td>
-                <td>0.25°</td>
-                <td>3D Earth-Specific ViT</td>
-                <td>294,912h (V100)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-              <tr>
-                <td><strong>FourCastNet v2</strong></td>
-                <td>NVIDIA</td>
-                <td>0.25°</td>
-                <td>ViT + SFNO</td>
-                <td>~1,200h (A100)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-              <tr>
-                <td><strong>KARINA</strong></td>
-                <td>Divers</td>
-                <td>2.5°</td>
-                <td>ConvNeXt</td>
-                <td>48h (4×A100)</td>
-                <td><span class="badge research">Recherche</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section id="innovations" class="section">
-      <div class="container">
-        <h2>🚀 Innovations Récentes</h2>
-        
-        <div class="innovation-card">
-          <h3>🔬 Contraintes Physiques</h3>
-          <p>AIFS intègre désormais des <strong>couches de contraintes physiques</strong> (bounding layers) pour améliorer les prévisions de précipitations et respecter les lois de conservation.</p>
-        </div>
-
-        <div class="innovation-card">
-          <h3>🧩 Approches Hybrides</h3>
-          <p>Exploration de systèmes combinant <strong>modèles physiques et IA</strong> pour tirer parti de la vitesse ML et de la fiabilité physique.</p>
-        </div>
-
-        <div class="innovation-card">
-          <h3>🌐 Modèles de Fondation</h3>
-          <p>Aurora pionnier de l'approche <strong>foundation model</strong> avec pré-entraînement sur multiples datasets atmosphériques et transfer learning.</p>
-        </div>
-
-        <div class="innovation-card">
-          <h3>⚡ Efficacité Énergétique</h3>
-          <p>AIFS démontre une <strong>réduction ~1000× de la consommation énergétique</strong> comparé aux modèles physiques, permettant ensembles massifs.</p>
-        </div>
-
-        <div class="innovation-card">
-          <h3>📍 Downscaling Multi-échelle</h3>
-          <p><strong>FengWu-GHR</strong> : downscaling à l'échelle kilométrique via modélisation de diffusion résiduelle. <strong>MSCAR</strong> : couplage imagerie satellite + ERA5 pour intensité cyclonique.</p>
-        </div>
-
-        <div class="innovation-card">
-          <h3>🎲 Ensembles Multi-modèles</h3>
-          <p>Moyennage simple des prévisions de 5 modèles ML approche les performances du meilleur modèle individuel tout en <strong>réduisant les valeurs aberrantes</strong>.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="challenges" class="section">
-      <div class="container">
-        <h2>⚠️ Défis et Limitations</h2>
-        
-        <div class="challenge-grid">
-          <div class="challenge-card">
-            <h3>🌊 Prévisions Trop Lissées</h3>
-            <p>Les modèles ML sous-estiment systématiquement les <strong>pics d'événements extrêmes</strong> (vents forts, précipitations intenses) en raison des objectifs d'entraînement et techniques de régularisation.</p>
-          </div>
-
-          <div class="challenge-card">
-            <h3>🌀 Intensité des Cyclones</h3>
-            <p>Tous les modèles ML présentent des <strong>biais faibles systématiques</strong> pour l'intensité des cyclones tropicaux, avec erreurs typiques de 25-35 hPa.</p>
-          </div>
-
-          <div class="challenge-card">
-            <h3>🌴 Régions Tropicales</h3>
-            <p>Plus grands défis dans les <strong>régions tropicales</strong> vs. latitudes moyennes, probablement hérités des limites des données d'entraînement ERA5.</p>
-          </div>
-
-          <div class="challenge-card">
-            <h3>🔍 Limite de Résolution</h3>
-            <p>Tous les modèles contraints par résolution ERA5 <strong>0.25° (~31 km)</strong>, insuffisante pour phénomènes méso-échelle et prévision locale sévère.</p>
-          </div>
-
-          <div class="challenge-card">
-            <h3>💾 Dépendance aux Données</h3>
-            <p>Modèles entraînés uniquement sur réanalyses peuvent mal se généraliser en contexte opérationnel réel. <strong>Dépendance aux systèmes physiques</strong> pour initialisation.</p>
-          </div>
-
-          <div class="challenge-card">
-            <h3>🎯 Assimilation d'Observations</h3>
-            <p>Capacité limitée à assimiler directement de <strong>nouveaux types d'observations</strong> non présents dans les données d'entraînement.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="performance" class="section">
-      <div class="container">
-        <h2>📈 Classement de Performance</h2>
-        <p>Évaluation homogène pour Asie de l'Est et Pacifique Ouest (Juin-Novembre 2023) :</p>
-        
-        <div class="ranking-container">
-          <div class="rank-item rank-1">
-            <span class="rank-number">1</span>
-            <div class="rank-content">
-              <h3>FengWu</h3>
-              <p>Meilleures métriques RMSE et ACC, excellente prévision de trajectoire cyclonique</p>
-            </div>
-          </div>
-
-          <div class="rank-item rank-2">
-            <span class="rank-number">2</span>
-            <div class="rank-content">
-              <h3>FuXi</h3>
-              <p>Performance globale solide, architecture cascadée efficace</p>
-            </div>
-          </div>
-
-          <div class="rank-item rank-3">
-            <span class="rank-number">3</span>
-            <div class="rank-content">
-              <h3>GraphCast</h3>
-              <p>Performances robustes, meilleure architecture GNN</p>
-            </div>
-          </div>
-
-          <div class="rank-item">
-            <span class="rank-number">4</span>
-            <div class="rank-content">
-              <h3>FourCastNet v2</h3>
-              <p>Très rapide, performances en amélioration vs. v1</p>
-            </div>
-          </div>
-
-          <div class="rank-item">
-            <span class="rank-number">5</span>
-            <div class="rank-content">
-              <h3>Pangu-Weather</h3>
-              <p>Erreurs de trajectoire plus importantes, mais meilleure intensité cyclonique</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="note-box">
-          <strong>Note :</strong> IFS opérationnel (9 km) se situe au milieu du groupe. L'ensemble multi-modèles approche les performances de FengWu.
-        </div>
-      </div>
-    </section>
-
-    <section id="future" class="section">
-      <div class="container">
-        <h2>🔮 Perspectives 2025-2026</h2>
-        
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Résolution Accrue</h3>
-            <p>Progression vers modèles globaux 9 km, puis échelle kilométrique</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Prévision Étendue</h3>
-            <p>Maturation des modèles ML sous-saisonniers à saisonniers</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Assimilation IA</h3>
-            <p>Systèmes d'assimilation de données basés ML réduisant la dépendance aux systèmes physiques</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Modèles Régionaux</h3>
-            <p>Développement de modèles ML régionaux haute résolution avec données d'entraînement locales</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Quantification d'Incertitude</h3>
-            <p>Meilleure caractérisation et communication de l'incertitude des prévisions ML</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="resources" class="section">
-      <div class="container">
-        <h2>📚 Ressources et Références</h2>
-        
-        <div class="resource-category">
-          <h3>Dépôts GitHub Open Source</h3>
-          <ul class="resource-list">
-            <li><a href="https://github.com/ecmwf/anemoi" target="_blank">🔗 Anemoi Framework (ECMWF)</a></li>
-            <li><a href="https://github.com/google-deepmind/graphcast" target="_blank">🔗 GraphCast (DeepMind)</a></li>
-            <li><a href="https://github.com/198808xc/Pangu-Weather" target="_blank">🔗 Pangu-Weather (Huawei)</a></li>
-            <li><a href="https://github.com/OpenEarthLab/ai-models-fengwu" target="_blank">🔗 FengWu (Shanghai AI Lab)</a></li>
-            <li><a href="https://github.com/ecmwf-lab/ai-models-fourcastnetv2" target="_blank">🔗 FourCastNet v2 (NVIDIA)</a></li>
-            <li><a href="https://github.com/tpys/ai-models-fuxi" target="_blank">🔗 FuXi (communautaire)</a></li>
-          </ul>
-        </div>
-
-        <div class="resource-category">
-          <h3>Publications Clés (2023-2025)</h3>
-          <ul class="resource-list">
-            <li>📄 Lang et al. (2024): "AIFS - ECMWF's data-driven forecasting system"</li>
-            <li>📄 Liu et al. (2024): "Evaluation of five global AI models for predicting weather in Eastern Asia and Western Pacific", <em>npj Climate and Atmospheric Science</em></li>
-            <li>📄 Lam et al. (2023): "Learning skillful medium-range global weather forecasting", <em>Science</em></li>
-            <li>📄 Chen et al. (2023): "FuXi: A cascade machine learning forecasting system", <em>npj Climate and Atmospheric Science</em></li>
-          </ul>
-        </div>
-
-        <div class="resource-category">
-          <h3>Documentation Officielle</h3>
-          <ul class="resource-list">
-            <li><a href="https://www.ecmwf.int/en/about/media-centre/aifs-blog" target="_blank">🔗 Blog AIFS (ECMWF)</a></li>
-            <li><a href="https://confluence.ecmwf.int/display/FCST/Implementation+of+AIFS+Single+v1" target="_blank">🔗 Documentation technique AIFS</a></li>
-            <li><a href="https://charts.ecmwf.int/" target="_blank">🔗 Cartes de prévision AIFS</a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="recommendations" class="section">
-      <div class="container">
-        <h2>💡 Recommandations Pratiques</h2>
-        
-        <div class="recommendation-box">
-          <h3>🏛️ Pour Institutions de Recherche</h3>
-          <ul>
-            <li><strong>Ressources importantes :</strong> GraphCast, AIFS, ou FengWu pour performance de pointe</li>
-            <li><strong>Ressources limitées :</strong> KARINA offre excellent compromis efficacité/performance</li>
-            <li><strong>Prévision ensemble :</strong> Implémenter ensembles multi-modèles pour fiabilité accrue</li>
-          </ul>
-        </div>
-
-        <div class="recommendation-box">
-          <h3>🌐 Pour Applications Régionales</h3>
-          <ul>
-            <li>Utiliser modèles ML globaux pour conditions initiales et limites</li>
-            <li>Maintenir modèles régionaux physiques haute résolution pour détails locaux</li>
-            <li>Explorer approches hybrides à mesure qu'elles maturent</li>
-          </ul>
-        </div>
-
-        <div class="recommendation-box">
-          <h3>⚙️ Pour Centres Opérationnels</h3>
-          <ul>
-            <li>Déploiement opérationnel ECMWF démontre maturité ML pour prévision moyen terme</li>
-            <li>Exécuter modèles ML parallèlement aux systèmes physiques (forces complémentaires)</li>
-            <li>Exploiter efficacité computationnelle extrême pour taille d'ensemble élargie</li>
-            <li>Développer post-traitement pour adresser limitation de lissage</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Gwendal SALIOU - Tous droits réservés</p>
-      <p style="font-size: 0.9rem; margin-top: 10px;">
-        Revue SOTA mise à jour : Octobre 2025 | 
-        <a href="../../index.html" style="color: var(--secondary-color);">Retour à l'accueil</a>
-      </p>
     </div>
-  </footer>
+</section>
 
-  <script>
-    // Enhanced interactive features
-    document.addEventListener('DOMContentLoaded', function() {
-      // Smooth scrolling behavior
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-            
-            // Close floating TOC if open
-            const floatingToc = document.querySelector('.floating-toc');
-            if (floatingToc) {
-              floatingToc.classList.remove('open');
-            }
-          }
-        });
-      });
+<!-- ========================================================= -->
+<!-- SECTION 4 — MÉTRIQUES -->
+<!-- ========================================================= -->
 
-      // Floating TOC functionality
-      const tocToggle = document.querySelector('.toc-toggle');
-      const tocClose = document.querySelector('.toc-close');
-      const floatingToc = document.querySelector('.floating-toc');
-      
-      if (tocToggle) {
-        tocToggle.addEventListener('click', () => {
-          floatingToc.classList.toggle('open');
-        });
-      }
-      
-      if (tocClose) {
-        tocClose.addEventListener('click', () => {
-          floatingToc.classList.remove('open');
-        });
-      }
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📊</span>
+            <h2>3. Métriques d'Évaluation</h2>
+        </div>
 
-      // Reading progress tracking
-      const progressBar = document.querySelector('.progress-bar');
-      const progressText = document.querySelector('.progress-text');
-      
-      function updateReadingProgress() {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        
-        if (progressBar) {
-          progressBar.style.setProperty('--progress', `${scrolled}%`);
-        }
-        if (progressText) {
-          progressText.textContent = `${Math.round(scrolled)}% lu`;
-        }
-      }
-      
-      window.addEventListener('scroll', updateReadingProgress);
-      updateReadingProgress(); // Initial call
+        <h3>3.1 Métriques d'Erreur</h3>
 
-      // Active TOC section highlighting
-      function updateActiveTocSection() {
-        const sections = document.querySelectorAll('section[id]');
-        const tocLinks = document.querySelectorAll('.toc-nav a[href^="#"]');
-        
-        let current = '';
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-          }
-        });
+        <div class="content-card">
+            <div class="card-header">
+                <span class="card-icon">📏</span>
+                <h3>Erreur Absolue Moyenne (MAE)</h3>
+            </div>
+            <div class="equation-block">
+            \[
+                \mathrm{MAE}_v(L) =
+                \frac{1}{|\Omega|}
+                \sum_{x,y}
+                    |\hat{y}_{v}(x,y,t+L) - y_{v}(x,y,t+L)|
+            \]
+            </div>
+        </div>
 
-        tocLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-          }
-        });
-      }
-      
-      window.addEventListener('scroll', updateActiveTocSection);
-      updateActiveTocSection(); // Initial call
+        <div class="content-card">
+            <div class="card-header">
+                <span class="card-icon">📐</span>
+                <h3>Erreur Quadratique Moyenne (RMSE)</h3>
+            </div>
+            <div class="equation-block">
+            \[
+                \mathrm{RMSE}_v(L) =
+                \sqrt{
+                    \frac{1}{|\Omega|}
+                    \sum_{x,y}
+                    (\hat{y}_{v}-y_{v})^2
+                }
+            \]
+            </div>
+        </div>
 
-      // Show/hide floating TOC based on scroll position
-      let lastScrollTop = 0;
-      window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const heroHeight = document.querySelector('.hero')?.offsetHeight || 500;
-        
-        if (scrollTop > heroHeight) {
-          floatingToc.style.display = 'block';
-        } else {
-          floatingToc.style.display = 'none';
-          floatingToc.classList.remove('open');
-        }
-        
-        lastScrollTop = scrollTop;
-      });
-    });
+        <h3>3.2 Métriques de Compétence</h3>
+        <div class="content-card">
+            <div class="card-header">
+                <span class="card-icon">🎯</span>
+                <h3>Score de Compétence</h3>
+            </div>
+            <div class="equation-block">
+            \[
+                S_v(L) = 1 - 
+                \frac{\mathrm{RMSE}_{\text{Complet}}(L)}
+                     {\mathrm{RMSE}_{\text{Grossier}}(L)}
+            \]
+            </div>
+        </div>
 
-    // Add intersection observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+        <h3>3.3 Échelle de Temps de Dilution</h3>
+        <div class="content-card">
+            <p>
+                <strong>Objectif :</strong> Trouver quand l'information locale devient non pertinente.
+            </p>
+            <div class="equation-block">
+            \[
+                L^*_v = \min \{ L \mid
+                    \Delta S_v(L) < 0.05
+                \}
+            \]
+            </div>
+        </div>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
+        <h3>3.4 Information Mutuelle</h3>
+        <div class="content-card">
+            <div class="equation-block">
+            \[
+                I_L(L)
+                = I(\mathbf{y}_H(t); \mathbf{y}_H(t+L)
+                    \mid \mathbf{y}_L(t+L))
+            \]
+            </div>
+        </div>
+    </div>
+</section>
 
-    // Observe all cards and boxes
-    document.addEventListener('DOMContentLoaded', () => {
-      const animatedElements = document.querySelectorAll(
-        '.model-card, .innovation-card, .challenge-card, .rank-item, .timeline-item'
-      );
-      
-      animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-      });
-    });
+<!-- ========================================================= -->
+<!-- SECTION 5 — ESPACES RÉSERVÉS POUR LES RÉSULTATS -->
+<!-- ========================================================= -->
 
-    // Add active state to navigation
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('nav a[href^="#"]');
-      
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📈</span>
+            <h2>4. Structure des Résultats Attendus</h2>
+        </div>
 
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    });
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">📉</span>
+                    <h3>Figure — Compétence vs Temps de Prévision</h3>
+                </div>
+                <p class="card-highlight">Insérer le graphique PNG/SVG ici.</p>
+            </div>
 
-    // Add table sorting functionality
-    document.addEventListener('DOMContentLoaded', () => {
-      const table = document.querySelector('.comparison-table');
-      if (table) {
-        const headers = table.querySelectorAll('th');
-        headers.forEach((header, index) => {
-          header.style.cursor = 'pointer';
-          header.addEventListener('click', () => {
-            sortTable(table, index);
-          });
-        });
-      }
-    });
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">🗾</span>
+                    <h3>Figure — Carte $L^*$ sur le Japon</h3>
+                </div>
+                <p class="card-highlight">Insérer la visualisation cartographique ici.</p>
+            </div>
 
-    function sortTable(table, column) {
-      const tbody = table.querySelector('tbody');
-      const rows = Array.from(tbody.querySelectorAll('tr'));
-      
-      rows.sort((a, b) => {
-        const aText = a.cells[column].textContent.trim();
-        const bText = b.cells[column].textContent.trim();
-        return aText.localeCompare(bText);
-      });
-      
-      rows.forEach(row => tbody.appendChild(row));
-    }
-  </script>
+            <div class="content-card">
+                <div class="card-header">
+                    <span class="card-icon">📄</span>
+                    <h3>Tableau — Échelles de Temps de Dilution</h3>
+                </div>
+                <p class="card-highlight">Insérer le tableau pour les variables T2M, SKT, MSL, SP, TCWV.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION 6 — CALENDRIER -->
+<!-- ========================================================= -->
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">⏳</span>
+            <h2>5. Calendrier Complet (8 Semaines → Soumission)</h2>
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <h3>✅ Semaines 1–2 : Entraînement & Vérification du Modèle</h3>
+                <ul>
+                    <li>Finaliser le prétraitement ERA5</li>
+                    <li>Entraînement final du CNN sur 1980–2015</li>
+                    <li>Ajustement de la validation (2016–2018)</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>✅ Semaines 3–4 : Définition des Expériences & Génération des Prévisions</h3>
+                <ul>
+                    <li>Exécuter la baseline de persistance</li>
+                    <li>Exécuter les modèles local uniquement et global uniquement</li>
+                    <li>Exécuter le modèle combiné à forçage intérieur</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>✅ Semaine 5 : Calcul des Métriques</h3>
+                <ul>
+                    <li>RMSE, MAE, ACC, scores spectraux</li>
+                    <li>Calculer l'échelle de temps de dilution $L^*$</li>
+                    <li>Analyse théorique de l'information</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>✅ Semaine 6 : Figures + Visualisations</h3>
+                <ul>
+                    <li>Courbes de compétence vs temps de prévision</li>
+                    <li>Cartes de $L^*$</li>
+                    <li>Diagrammes de décomposition d'erreur</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>✅ Semaine 7 : Rédaction de l'Article</h3>
+                <ul>
+                    <li>Introduction + Méthode + Expériences + Résultats</li>
+                    <li>Comparaison avec la littérature SOTA du downscaling</li>
+                    <li>Brouillon pour les coauteurs</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>✅ Semaine 8 : Soumission Finale à QJRMS</h3>
+                <ul>
+                    <li>Corrections des coauteurs</li>
+                    <li>Réviser les figures et peaufiner la rédaction</li>
+                    <li>Soumettre à QJRMS</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION 7 — PIED DE PAGE -->
+<!-- ========================================================= -->
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📬</span>
+            <h2>Contact & Notes</h2>
+        </div>
+        <div class="content-card">
+            <p>
+                Ce document évolutif représente la spécification complète de l'expérience de downscaling.
+                Il est prêt pour la conversion en manuscrit LaTeX mais fonctionne également comme un
+                aperçu conceptuel clair pour les collaborateurs et les évaluateurs.
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Gwendal SALIOU - Tous droits réservés</p>
+        <p><a href="../../index.html" style="color: var(--secondary-color);">Retour à l'accueil</a></p>
+    </div>
+</footer>
+
 </body>
 </html>
