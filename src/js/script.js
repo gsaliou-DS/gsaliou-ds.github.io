@@ -15,11 +15,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Professional rotating phrases for hero section
 const phrases = [
   "Doctorant spécialisé<br>IA & Data Science appliquée à la dynamique des fluides geophysiques",
-  "Chercheur en apprentissage automatique<br>pour la modélisation atmosphérique regionale haute résolution",
-  "Passionné par l'innovation<br>en science des données et IA",
-  "Expert en traitement de données<br>et modélisation prédictive",
-  "Développeur de solutions IA<br>pour l'industrie et la recherche",
-  "Recherche et developpement pour la prevision des risques<br>en géophysique et océanographie"
+  "Etudiant en apprentissage automatique<br>pour la modélisation atmosphérique regionale haute résolution",
+  "Passionné par l'innovation<br>en science des données et IA"
 ];
 
 let currentPhraseIndex = 0;
