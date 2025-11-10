@@ -1,5 +1,16 @@
 /* SOTA Review Page Specific Styles */
 
+/* Equation blocks for mathematical formulas */
+.equation-block {
+  background: #e5e9f0;
+  padding: 15px 20px;
+  border-left: 4px solid var(--secondary-color);
+  font-family: 'Courier New', monospace;
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
 /* Breadcrumb navigation */
 .breadcrumb {
   margin-bottom: 20px;
@@ -452,6 +463,18 @@
   box-shadow: var(--shadow-sm);
   border: 2px solid var(--border-color);
   transition: all 0.3s ease;
+}
+
+/* Single content card (not in grid) */
+.section .content-card {
+  margin: 20px 0;
+}
+
+.section h3 {
+  color: var(--primary-color);
+  font-size: 1.3rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
 .content-card:hover {
