@@ -1,30 +1,31 @@
-/* SOTA Review Page Specific Styles */
+/* SOTA Review Page Specific Styles - Simplified */
 
-/* Override body background for better contrast */
+/* Green background with black text */
 body {
-  background-color: #f3f4f6;
+  background-color: #d4edda;
+  color: #000000;
 }
 
-/* Ensure sections have proper background and text color */
+/* Sections with light green background */
 .section {
-  background-color: white;
-  color: var(--text-dark);
+  background-color: #d4edda;
+  color: #000000;
 }
 
 .section:nth-child(even) {
-  background-color: #f9fafb;
+  background-color: #c3e6cb;
 }
 
-/* Equation blocks for mathematical formulas */
+/* Equation blocks */
 .equation-block {
-  background: #e5e9f0;
+  background: #a8d5ba;
   padding: 15px 20px;
-  border-left: 4px solid var(--secondary-color);
+  border-left: 4px solid #28a745;
   font-family: 'Courier New', monospace;
   margin: 15px 0;
   border-radius: 8px;
   overflow-x: auto;
-  color: var(--text-dark);
+  color: #000000;
 }
 
 /* Breadcrumb navigation */
@@ -378,7 +379,7 @@ body {
 
 .section-subtitle {
   font-size: 1.1rem;
-  color: var(--text-light);
+  color: #000000;
   margin-top: 10px;
   font-style: italic;
 }
@@ -473,48 +474,44 @@ body {
 }
 
 .content-card {
-  background: white;
+  background: #a8d5ba;
   border-radius: 15px;
   padding: 25px;
-  box-shadow: var(--shadow-sm);
-  border: 2px solid var(--border-color);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: 2px solid #28a745;
   transition: all 0.3s ease;
+  color: #000000;
 }
 
-/* Single content card (not in grid) */
+/* Simplified styling */
 .section .content-card {
   margin: 20px 0;
+  background-color: #a8d5ba;
+  color: #000000;
 }
 
+.section h2,
 .section h3 {
-  color: var(--primary-color);
+  color: #000000;
   font-size: 1.3rem;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
-/* Ensure all text is visible */
+/* All text is black */
 .section p,
 .section ul,
-.section li {
-  color: var(--text-dark);
-}
-
+.section li,
 .content-card p,
 .content-card ul,
 .content-card li {
-  color: var(--text-medium);
+  color: #000000;
 }
 
 .content-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--secondary-color);
-}
-
-.content-card.primary {
-  border-color: var(--secondary-color);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-color: #155724;
 }
 
 .card-header {
@@ -530,13 +527,13 @@ body {
 
 .card-header h3 {
   margin: 0;
-  color: var(--primary-color);
+  color: #000000;
   font-size: 1.2rem;
 }
 
 .card-highlight {
-  background: var(--secondary-color);
-  color: white;
+  background: #28a745;
+  color: #000000;
   padding: 10px 15px;
   border-radius: 8px;
   font-size: 0.9rem;
